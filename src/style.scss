@@ -1,0 +1,110 @@
+/* Reset styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Nasa';
+  src: url('../public/fonts/nasa.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal; 
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  background-color: var(--cream); /* Deep background color */
+  color: var(--crimson); /* Text color */
+  font-family: 'Nasa', sans-serif !important;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--crimson);
+  text-decoration: none;
+  display: inline-flex
+;
+}
+
+a:hover,
+a:focus {
+  color: var(--crimson); /* Hover and focus state */
+}
+
+button {
+  background-color: var(--crimson); /* Button background */
+  color: var(--crimson); /* Button text */
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--crimson); /* Button hover background */
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+input {
+  padding: 10px;
+  border: 2px solid var(--crimson);
+  border-radius: 10px;
+  background: transparent;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+select {
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid var(--crimson);
+  background: var(--crimson);
+  color: #fff;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  background: var(--crimson);
+  color: var(--cream);
+  font-size: 35px;
+  font-family: 'Nasa', sans-serif !important;
+}
+.list {
+  padding: 20px;
+}
+
+:root {
+  --mocha: #7C7370;
+  --crimson: #6A1D2D;
+  --forest: #0D1A10;
+  --cream: #FEF5EC;
+  --ruby: #970747;
+}
