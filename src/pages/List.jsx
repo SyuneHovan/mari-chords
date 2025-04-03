@@ -4,7 +4,8 @@ import { Select } from "../components/Select";
 import { Link } from "react-router-dom";
 import songs from "../data/songs.json";
 import AddIcon from "../../public/svgs/add";
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
+import { Header } from "./Header";
 
 
 export const List = () => {
@@ -22,14 +23,29 @@ export const List = () => {
     }, [filter, selectedCategory]);
 
     return (
-        <Col className="list">
-            <Input placeholder="Search by name..." onChange={(e) => setFilter(e.target.value)} />
-            <Select options={[{ value: "", label: "All Categories" }, { value: "Pop", label: "Pop" }, { value: "Rock", label: "Rock" }]} onChange={(e) => setSelectedCategory(e.target.value)} />
-            <ul>
-                {filteredSongs.map(song => (
-                    <li key={song.name}><Link to={`/song/${song.name}`}>{song.name}</Link></li>
-                ))}
-            </ul>
-        </Col>
+        <>
+            <Header/>
+            <Row className="list" justify={"space-between"}>
+                <Col>
+                    <Row gutter={[12, 0]}>
+                        <Col>
+                            <Input placeholder="Search by name..." onChange={(e) => setFilter(e.target.value)} />
+                        </Col>
+                        <Col>
+                            <Select options={[{ value: "", label: "All Categories" }, { value: "Pop", label: "Pop" }, { value: "Rock", label: "Rock" }]} onChange={(e) => setSelectedCategory(e.target.value)} />
+                        </Col>
+                    </Row>
+                </Col>
+            </Row>
+            <Row className="list" justify={"space-between"}>
+                <Col>
+                    <ul>
+                        {filteredSongs.map(song => (
+                            <li key={song.name}><Link to={`/song/${song.name}`}>{song.name}</Link></li>
+                        ))}
+                    </ul>
+                </Col>
+            </Row>
+        </>
     );
 };

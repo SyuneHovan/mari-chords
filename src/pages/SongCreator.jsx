@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Header } from "./Header";
 
 export const SongCreator = () => {
   const [title, setTitle] = useState("");
@@ -26,54 +27,57 @@ export const SongCreator = () => {
   };
 
   return (
-    <div style={{ fontFamily: "Arial", padding: "20px" }}>
-      <h2>Create a Song</h2>
+    <>
+      <Header/>
       <div>
-        <label>
-          Song Title:{" "}
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            style={{ margin: "10px 0", padding: "5px" }}
-          />
-        </label>
+        <h2>Create a Song</h2>
+        <div>
+          <label>
+            Song Title:{" "}
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              style={{ margin: "10px 0", padding: "5px" }}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Word:{" "}
+            <input
+              type="text"
+              value={currentWord}
+              onChange={(e) => setCurrentWord(e.target.value)}
+              style={{ margin: "10px 0", padding: "5px" }}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Chords (comma-separated):{" "}
+            <input
+              type="text"
+              value={currentChords}
+              onChange={(e) => setCurrentChords(e.target.value)}
+              style={{ margin: "10px 0", padding: "5px" }}
+            />
+          </label>
+        </div>
+        <button onClick={addWord} style={{ margin: "10px 5px", padding: "5px" }}>
+          Add Word
+        </button>
+        <button
+          onClick={generateJSON}
+          style={{ margin: "10px 5px", padding: "5px" }}
+        >
+          Generate JSON
+        </button>
+        <div>
+          <h3>Preview:</h3>
+          <pre>{JSON.stringify({ title, lyrics_and_chords: lyricsAndChords }, null, 2)}</pre>
+        </div>
       </div>
-      <div>
-        <label>
-          Word:{" "}
-          <input
-            type="text"
-            value={currentWord}
-            onChange={(e) => setCurrentWord(e.target.value)}
-            style={{ margin: "10px 0", padding: "5px" }}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Chords (comma-separated):{" "}
-          <input
-            type="text"
-            value={currentChords}
-            onChange={(e) => setCurrentChords(e.target.value)}
-            style={{ margin: "10px 0", padding: "5px" }}
-          />
-        </label>
-      </div>
-      <button onClick={addWord} style={{ margin: "10px 5px", padding: "5px" }}>
-        Add Word
-      </button>
-      <button
-        onClick={generateJSON}
-        style={{ margin: "10px 5px", padding: "5px" }}
-      >
-        Generate JSON
-      </button>
-      <div>
-        <h3>Preview:</h3>
-        <pre>{JSON.stringify({ title, lyrics_and_chords: lyricsAndChords }, null, 2)}</pre>
-      </div>
-    </div>
+    </>
   );
 }

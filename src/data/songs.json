@@ -1,32 +1,141 @@
 [
     {
-        "name": "Imagine",
-        "author": "John Lennon",
+        "name": "Home",
+        "author": "Passenger",
         "category": "Pop",
-        "chords": [
-            "C  F  C  F",
-            "C  Am  Dm  G",
-            "C  E  F  G"
+        "lyrics": [
+            [
+                {
+                    "word": "They",
+                    "chord": ""
+                },
+                {
+                    "word": "say",
+                    "chord": "C"
+                },
+                {
+                    "word": "home",
+                    "chord": ""
+                },
+                {
+                    "word": "is",
+                    "chord": ""
+                },
+                {
+                    "word": "where",
+                    "chord": "G"
+                },
+                {
+                    "word": "the",
+                    "chord": "C"
+                },
+                {
+                    "word": "heart",
+                    "chord": ""
+                }
+            ],
+            [
+                {
+                    "word": "is",
+                    "chord": ""
+                },
+                {
+                    "word": "but",
+                    "chord": ""
+                },
+                {
+                    "word": "my",
+                    "chord": "Am"
+                },
+                {
+                    "word": "heart",
+                    "chord": ""
+                },
+                {
+                    "word": "is",
+                    "chord": "G"
+                },
+                {
+                    "word": "wild",
+                    "chord": ""
+                },
+                {
+                    "word": "and",
+                    "chord": "C"
+                },
+                {
+                    "word": "free",
+                    "chord": ""
+                }
+            ],
+            [
+                {
+                    "word": "So",
+                    "chord": ""
+                },
+                {
+                    "word": "am",
+                    "chord": "C"
+                },
+                {
+                    "word": "I",
+                    "chord": ""
+                },
+                {
+                    "word": "homeless",
+                    "chord": "G"
+                }
+            ],
+            [
+                {
+                    "word": "Or",
+                    "chord": ""
+                },
+                {
+                    "word": "just",
+                    "chord": ""
+                },
+                {
+                    "word": "heartless?",
+                    "chord": "C"
+                }
+            ],
+            [
+                {
+                    "word": "Did",
+                    "chord": ""
+                },
+                {
+                    "word": "I",
+                    "chord": ""
+                },
+                {
+                    "word": "start",
+                    "chord": "Am"
+                },
+                {
+                    "word": "this?",
+                    "chord": ""
+                }
+            ],
+            [
+                {
+                    "word": "Did",
+                    "chord": "G"
+                },
+                {
+                    "word": "it",
+                    "chord": ""
+                },
+                {
+                    "word": "start",
+                    "chord": "C"
+                },
+                {
+                    "word": "me?",
+                    "chord": ""
+                }
+            ]
         ]
-    },
-    {
-        "name": "Wonderwall",
-        "author": "Oasis",
-        "category": "Rock",
-        "chords": [
-            "Em  G  D  A",
-            "C  D  Em  G",
-            "D  A  Em  G"
-        ]
-    },
-    {
-        "name": "Hallelujah",
-        "author": "Leonard Cohen",
-        "category": "Folk",
-        "chords": [
-            "C  Am  C  Am",
-            "F  G  C  G",
-            "Am  F  C  G"
-        ]
-    }
+      }
 ]
