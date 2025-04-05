@@ -30,10 +30,10 @@ export default function handler(req, res) {
       lyrics
     };
 
-    res.status(200).json(newSong);
-
     songs.push(newSong);
-
+    
+    res.status(200).json(songs);
+    
     // Write the updated songs to the file
     try {
       fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
