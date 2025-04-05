@@ -32,7 +32,8 @@ export default function handler(req, res) {
       fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
       return res.status(200).json({ message: "Song added successfully!" });
     } catch (error) {
-      return res.status(500).json({ error: "Failed to save the song" });
+      return res.status(200).json(error);
+      // return res.status(500).json({ error: "Failed to save the song" });
     }
   } else {
     return res.status(405).json({ error: "Method not allowed" });
