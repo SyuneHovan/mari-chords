@@ -13,9 +13,11 @@ export default function handler(req, res) {
     const songsFilePath = path.join(process.cwd(), "src", "data", "songs.json");
 
     // Read the current songs file
+      console.log("songsFilePath", songsFilePath)
     let songs;
     try {
       const data = fs.readFileSync(songsFilePath, "utf8");
+      console.log("data", data)
       songs = JSON.parse(data);
     } catch (error) {
       return res.status(500).json({ error: "Failed to read songs.json" });
