@@ -29,14 +29,14 @@ export const AddSong = () => {
         lyrics: parsedLines,
         category: "Pop" // Example category
       };
-    
-      fetch("http://localhost:3000/api/addSong", {
+
+      fetch(`${window.location.origin}/api/addSong`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(song)
-      })
+      })      
         .then(response => {
           if (!response.ok) {
             throw new Error("Failed to save the song");
