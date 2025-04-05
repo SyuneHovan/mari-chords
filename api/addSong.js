@@ -1,11 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
+import fs from "fs";
+import path from "path";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
-
-export default async function handler(req, res) {
+export default function handler(req, res) {
   if (req.method === "POST") {
     const { songTitle, artist, lyrics, category = "Unknown" } = req.body;
 
@@ -13,21 +9,34 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const { data, error } = await supabase.from("songs").insert([
-      {
-        name: songTitle,
-        author: artist,
-        lyrics,
-        category
-      }
-    ]);
+    const songsFilePath = path.join(process.cwd(), "src", "data", "songs.json");
 
-    if (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Failed to save the song" });
+    let songs;
+    try {
+      const data = fs.readFileSync(songsFilePath, "utf8");
+      songs = JSON.parse(data);
+    } catch (error) {
+      return res.status(500).json({ error: "Failed to read songs.json" });
     }
 
-    return res.status(200).json({ message: "Song added successfully!" });
+    const newSong = {
+      name: songTitle,
+      author: artist,
+      category,
+      lyrics
+    };
+
+    songs.push(newSong);
+
+    try {
+      if (process.env.NODE_ENV === "development") {
+        fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
+      }
+      return res.status(200).json({ message: "Song added successfully!" });
+    } catch (error) {
+      return res.status(200).json(error);
+      // return res.status(500).json({ error: "Failed to save the song" });
+    }
   } else {
     return res.status(405).json({ error: "Method not allowed" });
   }
