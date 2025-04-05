@@ -13,7 +13,8 @@ export default function handler(req, res) {
     const songsFilePath = path.join(process.cwd(), "src", "data", "songs.json");
 
     // Read the current songs file
-      console.log("songsFilePath", songsFilePath)
+    console.log("songsFilePath", songsFilePath)
+    
     let songs;
     try {
       const data = fs.readFileSync(songsFilePath, "utf8");
