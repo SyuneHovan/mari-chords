@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 
 export default function handler(req, res) {
-  console.log("res",req, res)
   if (req.method === "POST") {
     const { songTitle, artist, lyrics, category = "Unknown" } = req.body;
 
@@ -12,8 +11,6 @@ export default function handler(req, res) {
 
     const songsFilePath = path.join(process.cwd(), "src", "data", "songs.json");
 
-    // Read the current songs file
-
     let songs;
     try {
       const data = fs.readFileSync(songsFilePath, "utf8");
@@ -22,7 +19,6 @@ export default function handler(req, res) {
       return res.status(500).json({ error: "Failed to read songs.json" });
     }
 
-    // Add the new song
     const newSong = {
       name: songTitle,
       author: artist,
@@ -31,17 +27,14 @@ export default function handler(req, res) {
     };
 
     songs.push(newSong);
-    
-    res.status(200).json(songs);
-    
-    // Write the updated songs to the file
+
     try {
       fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
-      res.status(200).json({ message: "Song added successfully!" });
+      return res.status(200).json({ message: "Song added successfully!" });
     } catch (error) {
-      res.status(500).json({ error: "Failed to save the song" });
+      return res.status(500).json({ error: "Failed to save the song" });
     }
   } else {
-    res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ error: "Method not allowed" });
   }
 }
