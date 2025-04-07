@@ -28,6 +28,8 @@ export default function handler(req, res) {
 
     songs.push(newSong);
 
+    console.log("songs",songs)
+
     try {
       // if (process.env.NODE_ENV === "development") {
         fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
