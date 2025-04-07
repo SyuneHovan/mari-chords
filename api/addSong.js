@@ -29,9 +29,9 @@ export default function handler(req, res) {
     songs.push(newSong);
 
     try {
-      if (process.env.NODE_ENV === "development") {
+      // if (process.env.NODE_ENV === "development") {
         fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
-      }
+      // }
       return res.status(200).json({ message: "Song added successfully!" });
     } catch (error) {
       return res.status(200).json(error);
