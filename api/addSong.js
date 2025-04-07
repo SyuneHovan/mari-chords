@@ -33,6 +33,9 @@ export default function handler(req, res) {
     try {
       // if (process.env.NODE_ENV === "development") {
         fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
+        console.log("writeFileSync")
+        const data1 = fs.readFileSync(songsFilePath, "utf8");
+        console.log("readFileSync", data1)
       // }
       return res.status(200).json({ message: "Song added successfully!" });
     } catch (error) {
