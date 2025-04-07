@@ -27,15 +27,17 @@ export default function handler(req, res) {
     };
 
     songs.push(newSong);
+    let abc = JSON.stringify(songs, null, 2);
 
     try {
       // if (process.env.NODE_ENV === "development") {
-        fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
+
+      fs.writeFileSync(songsFilePath, abc, "utf8");
         // const data1 = fs.readFileSync(songsFilePath, "utf8");
       // }
-      return res.status(200).json({ message: "Song added successfully!", songsFilePath, songs });
+      return res.status(200).json({ message: "Song added successfully!", abc });
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(500).json(error, abc);
       // return res.status(500).json({ error: "Failed to save the song" });
     }
   } else {
