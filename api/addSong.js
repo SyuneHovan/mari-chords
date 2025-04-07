@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-// Get environment variables (make sure these are set in Vercel's Environment Variables)
+// Get environment variables
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO;
 const SONGS_FILE_PATH = process.env.SONGS_FILE_PATH;
@@ -13,9 +13,6 @@ const headers = {
 };
 
 export default async function handler(req, res) {
-  // Log the incoming request for better debugging
-  console.log("Received request:", req.body);
-
   // Only allow POST requests
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -33,12 +30,13 @@ export default async function handler(req, res) {
 
   try {
     // Fetch the current songs.json file from GitHub
-    console.log("Fetching existing songs.json from GitHub...");
     const response = await fetch(`${apiUrl}?ref=${GITHUB_BRANCH}`, { headers });
     const fileData = await response.json();
 
-    // Log the file data for debugging
-    console.log("GitHub file data:", fileData);
+    // Handle file not found
+    if (fileData.message && fileData.message.includes("Not Found")) {
+      throw new Error(`GitHub file not found: ${SONGS_FILE_PATH}`);
+    }
 
     // Check if the file data is valid
     if (!fileData.content || !fileData.sha) {
@@ -48,7 +46,7 @@ export default async function handler(req, res) {
     // Decode the existing songs data
     const existingSongs = JSON.parse(Buffer.from(fileData.content, "base64").toString("utf-8"));
 
-    // Create new song entry
+    // Create new song object
     const newSong = {
       name: songTitle,
       author: artist,
@@ -56,14 +54,13 @@ export default async function handler(req, res) {
       lyrics,
     };
 
-    // Add new song to the list
+    // Add the new song to the existing songs
     const updatedSongs = [...existingSongs, newSong];
 
     // Encode the updated songs data back to base64
     const updatedContent = Buffer.from(JSON.stringify(updatedSongs, null, 2)).toString("base64");
 
     // Commit the updated file to GitHub
-    console.log("Committing updated songs.json to GitHub...");
     const updateResponse = await fetch(apiUrl, {
       method: "PUT",
       headers,
@@ -84,8 +81,7 @@ export default async function handler(req, res) {
     // Return success message
     return res.status(200).json({ message: "Song added successfully!" });
   } catch (err) {
-    // Catch and log any errors that occur
-    console.error("🔥 ERROR:", err);
+    console.error("🔥 Error:", err);
     return res.status(500).json({ error: err.message });
   }
 }
