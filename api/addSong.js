@@ -33,7 +33,7 @@ export default function handler(req, res) {
         fs.writeFileSync(songsFilePath, JSON.stringify(songs, null, 2), "utf8");
         // const data1 = fs.readFileSync(songsFilePath, "utf8");
       // }
-      return res.status(200).json({ message: "Song added successfully!", data1 });
+      return res.status(200).json({ message: "Song added successfully!", songsFilePath });
     } catch (error) {
       return res.status(200).json(error);
       // return res.status(500).json({ error: "Failed to save the song" });
