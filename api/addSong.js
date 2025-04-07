@@ -29,17 +29,17 @@ export default function handler(req, res) {
     songs.push(newSong);
     let abc = JSON.stringify(songs, null, 2);
 
-    try {
-      // if (process.env.NODE_ENV === "development") {
+    // try {
+    //   // if (process.env.NODE_ENV === "development") {
 
-      fs.writeFileSync(songsFilePath, abc, "utf8");
-        // const data1 = fs.readFileSync(songsFilePath, "utf8");
-      // }
-      return res.status(200).json({ message: "Song added successfully!", abc });
-    } catch (error) {
-      return res.status(200).json(abc);
-      // return res.status(500).json({ error: "Failed to save the song" });
-    }
+    //   fs.writeFileSync(songsFilePath, abc, "utf8");
+    //     // const data1 = fs.readFileSync(songsFilePath, "utf8");
+    //   // }
+    //   return res.status(200).json({ message: "Song added successfully!", abc });
+    // } catch (error) {
+    //   return res.status(200).json(abc);
+    //   // return res.status(500).json({ error: "Failed to save the song" });
+    // }
   } else {
     return res.status(405).json({ error: "Method not allowed" });
   }
