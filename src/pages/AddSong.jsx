@@ -44,6 +44,7 @@ export const AddSong = () => {
           return response.json();
         })
         .then(data => {
+          log("WEEEEEEE")
           alert(data.message);
           // Reset fields
           setSongTitle("");
