@@ -37,7 +37,7 @@ export default function handler(req, res) {
       // }
       return res.status(200).json({ message: "Song added successfully!", abc });
     } catch (error) {
-      return res.status(500).json(error, abc);
+      return res.status(200).json(abc);
       // return res.status(500).json({ error: "Failed to save the song" });
     }
   } else {
