@@ -48,7 +48,7 @@ button {
   border: none;
   padding: 0.5em 1em;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 6px;
 }
 
 button:hover {
@@ -70,11 +70,33 @@ img {
   height: auto;
 }
 
+.ant-input-number-outlined {
+  border: 1px solid var(--crimson) !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+
+  &:hover {
+    border: 1px solid var(--ruby) !important;
+  }
+
+  &:focus,
+  &:focus-within {
+    border: 1px solid var(--ruby) !important;
+    box-shadow: 0 0 0 2px #97074721 !important;
+  }
+
+  & .ant-input-number-handler:hover .ant-input-number-handler-up-inner,
+  & .ant-input-number-handler:hover .ant-input-number-handler-down-inner {
+    color: var(--crimson) !important;
+  }
+}
+
+
 input,
 textarea {
   padding: 5px 10px;
   border: 1px solid var(--crimson);
-  border-radius: 10px;
+  border-radius: 6px;
   background: #fff;
 }
 input:focus {
@@ -83,7 +105,7 @@ input:focus {
 
 select {
   padding: 5px;
-  border-radius: 10px;
+  border-radius: 6px;
   border: 2px solid var(--crimson);
   background: var(--crimson);
   color: #fff;
@@ -133,11 +155,42 @@ select:focus {
 }
 
 .lyrics {
-  margin-top: 50px;
+  margin-top: 20px;
+  overflow-y: auto;
+  height: 60vh;
+  padding-top: 20px;
 }
 
 .song-page-container {
   padding: 20px;
+}
+
+.scroll-button {
+  button {
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background: transparent !important;
+    padding: 0;
+    position: absolute;
+    top: calc(50% - 12px);
+    right: 10px;
+  }
+
+  .ant-input-number .ant-input-number-handler-wrap {
+    right: 35px;
+  }
+}
+
+#scrollRoll::-webkit-scrollbar {
+  display: none;
+}
+
+#scrollRoll {
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
 }
 
 :root {
