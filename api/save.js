@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+    res.status(405).send("Method Not Allowed");
     if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
     const GITHUB_REPO = "SyuneHovan/mari-chords";
