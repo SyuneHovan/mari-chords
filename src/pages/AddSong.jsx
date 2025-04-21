@@ -32,7 +32,7 @@ export const AddSong = () => {
 
       const SERVER_URL = window.location.origin;
       
-      await fetch(`${SERVER_URL}/api/save-content.js`, {
+      await fetch(`${SERVER_URL}/api/save.js`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ song })
