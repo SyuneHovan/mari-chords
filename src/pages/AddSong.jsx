@@ -29,6 +29,8 @@ export const AddSong = () => {
         lyrics: parsedLines,
         category: "Pop" // Example category
       };
+
+      const SERVER_URL = window.location.origin;
       
       await fetch(`${SERVER_URL}/api/save-content.js`, {
           method: "POST",
