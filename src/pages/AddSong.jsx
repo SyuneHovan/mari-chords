@@ -22,39 +22,45 @@ export const AddSong = () => {
       setParsedLines(updatedLines);
     };
     
-    const handleSaveSong = () => {
+    const handleSaveSong = async () => {
       const song = {
         songTitle,
         artist,
         lyrics: parsedLines,
         category: "Pop" // Example category
       };
+      
+      await fetch(`${SERVER_URL}/api/save-content.js`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ song })
+      });
 
-      fetch(`${window.location.origin}/api/addSong`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(song)
-      })      
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("Failed to save the song");
-          }
-          return response.json();
-        })
-        .then(data => {
-          log("WEEEEEEE")
-          alert(data.message);
-          // Reset fields
-          setSongTitle("");
-          setArtist("");
-          setParsedLines([]);
-        })
-        .catch(error => {
-          console.error("Error:", error);
-          alert("Error saving the song");
-        });
+      // fetch(`${window.location.origin}/api/addSong`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json"
+      //   },
+      //   body: JSON.stringify(song)
+      // })      
+      //   .then(response => {
+      //     if (!response.ok) {
+      //       throw new Error("Failed to save the song");
+      //     }
+      //     return response.json();
+      //   })
+      //   .then(data => {
+      //     log("WEEEEEEE")
+      //     alert(data.message);
+      //     // Reset fields
+      //     setSongTitle("");
+      //     setArtist("");
+      //     setParsedLines([]);
+      //   })
+      //   .catch(error => {
+      //     console.error("Error:", error);
+      //     alert("Error saving the song");
+      //   });
     };
   
     return (
