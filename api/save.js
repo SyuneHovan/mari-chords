@@ -1,38 +1,90 @@
 export default async function handler(req, res) {
-    if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Method Not Allowed" });
+    }
 
     const GITHUB_REPO = "SyuneHovan/mari-chords";
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const { content } = req.body;
+    const BRANCH = "main"; // Replace with your default branch if not 'main'
+    const { song } = req.body;
 
-    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json`;
+    console.log("API handler invoked with body:", req.body);
+    console.log("GITHUB_TOKEN present:", !!GITHUB_TOKEN);
+
+    // Validate inputs
+    if (!GITHUB_TOKEN) {
+        console.error("GITHUB_TOKEN is missing");
+        return res.status(500).json({ error: "Server configuration error" });
+    }
+    if (!song || !song.songTitle || !song.artist) {
+        console.error("Invalid song data:", song);
+        return res.status(400).json({ error: "Song data is incomplete" });
+    }
+
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json?ref=${BRANCH}`;
 
     try {
+        // Fetch current file
         const fileRes = await fetch(url, {
             headers: { Authorization: `token ${GITHUB_TOKEN}` }
         });
 
-        if (!fileRes.ok) {
-            throw new Error("Failed to fetch file from GitHub");
+        console.log("GitHub API response status:", fileRes.status);
+        console.log("GitHub API response headers:", Object.fromEntries(fileRes.headers));
+
+        let songs = [];
+        let sha = null;
+
+        if (fileRes.status === 404) {
+            console.log("songs.json not found; creating new file");
+        } else if (!fileRes.ok) {
+            const errorData = await fileRes.json();
+            console.error("GitHub fetch error details:", errorData);
+            throw new Error(`Failed to fetch file from GitHub: ${fileRes.statusText}`);
+        } else {
+            const fileData = await fileRes.json();
+            console.log("File data from GitHub:", fileData);
+
+            if (!fileData.sha) {
+                throw new Error("No sha found in GitHub response");
+            }
+            if (!fileData.content) {
+                throw new Error("No content found in GitHub response");
+            }
+
+            // Decode content
+            const currentContent = Buffer.from(fileData.content, 'base64').toString('utf8');
+            console.log("Current songs.json content:", currentContent);
+            try {
+                songs = JSON.parse(currentContent);
+                if (!Array.isArray(songs)) {
+                    throw new Error("songs.json is not an array");
+                }
+            } catch (e) {
+                console.error("Error parsing songs.json:", e.message);
+                throw new Error("Invalid songs.json format");
+            }
+            sha = fileData.sha;
         }
 
-        const fileData = await fileRes.json();
+        // Append new song
+        songs.push(song);
+        console.log("Updated songs array:", songs);
 
-        // Ensure the fileData contains sha
-        if (!fileData.sha) {
-            throw new Error("No sha found in GitHub response");
-        }
-
-        console.log("File data from GitHub:", fileData); // Log the file data
-
-        const sha = fileData.sha; // This is the SHA of the file you want to update
-
+        // Prepare updated content
+        const updatedContent = JSON.stringify(songs, null, 2);
         const commitData = {
-            message: "Update content via Vercel",
-            content: Buffer.from(content).toString("base64"),
-            sha
+            message: `Add song: ${song.songTitle}`,
+            content: Buffer.from(updatedContent).toString("base64"),
+            branch: BRANCH
         };
+        if (sha) {
+            commitData.sha = sha;
+        }
 
+        console.log("Commit data:", commitData);
+
+        // Commit to GitHub
         const response = await fetch(url, {
             method: "PUT",
             headers: {
@@ -42,13 +94,21 @@ export default async function handler(req, res) {
             body: JSON.stringify(commitData)
         });
 
+        console.log("GitHub commit response status:", response.status);
+        const commitResponse = await response.json();
+        console.log("GitHub commit response:", commitResponse);
+
         if (!response.ok) {
-            throw new Error("GitHub commit failed");
+            console.error("GitHub commit error details:", commitResponse);
+            throw new Error(`GitHub commit failed: ${response.statusText}`);
         }
 
-        res.status(200).send("Content saved successfully!");
+        // Verify commit SHA
+        console.log("Committed SHA:", commitResponse.commit.sha);
+
+        return res.status(200).json({ message: "Song added successfully!" });
     } catch (error) {
-        console.error("Error during GitHub API request:", error);
-        res.status(500).send("An error occurred while saving the content.");
+        console.error("Error during GitHub API request:", error.message);
+        return res.status(500).json({ error: "An error occurred while adding the song" });
     }
 }

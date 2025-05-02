@@ -32,10 +32,26 @@ export const AddSong = () => {
 
       const SERVER_URL = window.location.origin;
       
-      await fetch(`${SERVER_URL}/api/save.js`, {
+      await fetch(`${SERVER_URL}/api/save`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ song })
+      })
+      .then(response => {
+          if (!response.ok) {
+              console.error("Failed to save the song 2", response);
+              throw new Error("Failed to save the song");
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log("Success saving the song 1:", data.message);
+          setSongTitle("");
+          setArtist("");
+          setParsedLines([]);
+      })
+      .catch(error => {
+          console.log("Error saving the song 1:", error);
       });
 
       // fetch(`${window.location.origin}/api/addSong`, {
