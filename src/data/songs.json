@@ -613,5 +613,20 @@
       ]
     ],
     "category": "Pop"
+  },
+  {
+    "songTitle": "we",
+    "artist": "we",
+    "lyrics": [
+      [
+        {
+          "word": "we",
+          "chords": [
+            "w"
+          ]
+        }
+      ]
+    ],
+    "category": "Pop"
   }
 ]
