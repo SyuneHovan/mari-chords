@@ -583,18 +583,5 @@
         }
       ]
     ]
-  },
-  {
-    "songTitle": "asd",
-    "artist": "asd",
-    "lyrics": [
-      [
-        {
-          "word": "asd",
-          "chords": []
-        }
-      ]
-    ],
-    "category": "Pop"
   }
 ]
