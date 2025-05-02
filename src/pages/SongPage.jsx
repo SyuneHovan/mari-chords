@@ -50,11 +50,9 @@ export const SongPage = () => {
                             <span key={wordIndex} className="word-container">
                                 <span className="word">{wordObj.word}</span>
 
-                                {wordObj.chord && (
-                                    <span className="chord">
-                                        {wordObj.chord}
-                                    </span>
-                                )}
+                                <span className="chord">
+                                    {wordObj.chords.map((chord) => chord).join(" ")}
+                                </span>
                             </span>
                         ))}
 

@@ -18,10 +18,10 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { songTitle, artist, lyrics, category = "Unknown" } = req.body;
+  const { name, author, lyrics, category = "Unknown" } = req.body;
 
   // Validate incoming request data
-  if (!songTitle || !artist || !lyrics) {
+  if (!name || !author || !lyrics) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
@@ -48,8 +48,8 @@ export default async function handler(req, res) {
 
     // Create new song object
     const newSong = {
-      name: songTitle,
-      author: artist,
+      name: name,
+      author: author,
       category,
       lyrics,
     };
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
       method: "PUT",
       headers,
       body: JSON.stringify({
-        message: `Add new song: ${songTitle}`,
+        message: `Add new song: ${name}`,
         content: updatedContent,
         sha: fileData.sha,
         branch: GITHUB_BRANCH,

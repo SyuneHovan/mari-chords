@@ -13,6 +13,8 @@ export const List = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [filteredSongs, setFilteredSongs] = useState(songs);
 
+    console.log("songs", songs)
+
     useEffect(() => {
         setFilteredSongs(
             songs.filter(song =>
@@ -41,7 +43,7 @@ export const List = () => {
                 <Col>
                     <ul>
                         {filteredSongs.map(song => (
-                            <li key={song.name}><Link to={`/song/${song.name}`}>{song.name}</Link></li>
+                            <li key={song.name}><Link to={`/song/${song.name}`}>{song.name} - {song.author}</Link></li>
                         ))}
                     </ul>
                 </Col>
