@@ -1178,5 +1178,32 @@
       ]
     ],
     "category": "Pop"
+  },
+  {
+    "name": "Նոր երգ",
+    "author": "Վալոդ",
+    "category": "Rock",
+    "lyrics": [
+      [
+        {
+          "word": "Երգ",
+          "chords": [
+            "G"
+          ]
+        },
+        {
+          "word": "երգ",
+          "chords": [
+            "A"
+          ]
+        },
+        {
+          "word": "երգ",
+          "chords": [
+            "Bm"
+          ]
+        }
+      ]
+    ]
   }
 ]
