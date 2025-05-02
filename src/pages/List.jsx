@@ -64,7 +64,7 @@ export const List = () => {
                                 <Link to={`/song/${song.name}`}>
                                     <Row className="song" justify={"space-between"}>
                                         <Col>
-                                            <SongIcon/>
+                                            <SongIcon className="song-list-icon"/>
                                         </Col>
                                         <Col className="songInfoBox">
                                             <Paragraph className="songInfo songTitle">{song.name}</Paragraph>

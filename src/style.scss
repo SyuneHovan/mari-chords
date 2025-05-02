@@ -349,7 +349,7 @@ select:focus {
 
   .songInfo {
     color: var(--cream);
-    font-size: 16px;
+    font-size: 14px;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -359,9 +359,15 @@ select:focus {
     &.songTitle {
       text-transform: uppercase;
       font-weight: 600;
-      font-size: 24px;
+      font-size: 18px;
     }
   }
+}
+
+.song-list-icon {
+  width: 20vw;
+  min-width: 100px;
+  max-width: 400px;
 }
 
 .waveCont {

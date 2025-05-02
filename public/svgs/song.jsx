@@ -1,6 +1,6 @@
-const SongIcon = () => {
+const SongIcon = ({className}) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 314 315" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 314 315" fill="none">
       <g filter="url(#filter0_d_3_28)">
       <path d="M262 10H30C21.1634 10 14 17.1634 14 26V258C14 266.837 21.1634 274 30 274H262C270.837 274 278 266.837 278 258V26C278 17.1634 270.837 10 262 10Z" fill="#FFF2DF"/>
       </g>
