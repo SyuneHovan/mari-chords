@@ -11,6 +11,7 @@ import { Col, Row } from "antd";
 export const AddSong = () => {
     const [lyrics, setLyrics] = useState("");
     const [parsedLines, setParsedLines] = useState([]);
+    const [category, setCategory] = useState("");
     const [name, setName] = useState("");
     const [author, setAuthor] = useState("");
     const [activeWord, setActiveWord] = useState(null);
@@ -38,8 +39,8 @@ export const AddSong = () => {
       const song = {
         name,
         author,
-        lyrics: parsedLines,
-        category: "Pop" // Example category
+        category,
+        lyrics: parsedLines
       };
 
       const SERVER_URL = window.location.origin;
@@ -90,6 +91,14 @@ export const AddSong = () => {
               value={author}
               placeholder="author"
               onChange={e => setAuthor(e.target.value)}
+            />
+            <br />
+            <br />
+            <input
+              type="text"
+              value={category}
+              placeholder="category"
+              onChange={e => setCategory(e.target.value)}
             />
           </div>
           <br />
