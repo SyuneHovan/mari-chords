@@ -43,19 +43,10 @@ export const List = () => {
     return (
         <>
             <HomeWaveIcon className={"home-bg-wave"}/> 
-            <Row className="list-filter" justify={"space-between"}>
-                <Col>
-                    <Row gutter={[12, 0]}>
-                        <Col>
-                            <Input placeholder="Search by name..." onChange={(e) => setFilter(e.target.value)} />
-                        </Col>
-                        <Col>
-                            {/* <Select options={[{ value: "", label: "All Categories" }, { value: "Pop", label: "Pop" }, { value: "Rock", label: "Rock" }]} onChange={(e) => setSelectedCategory(e.target.value)} /> */}
-                            <CategoryScroll options={category} onChange={(e) => setSelectedCategory(e.target.value)} />
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
+            <div className="list-filter">
+                <Input placeholder="Search by name..." onChange={(e) => setFilter(e.target.value)} />
+                <CategoryScroll options={category} onChange={(e) => setSelectedCategory(e.target.value)} />
+            </div>
             <Row className="list" justify={"space-between"}>
                 <Col>
                     <ul>
@@ -64,7 +55,7 @@ export const List = () => {
                                 <Link to={`/song/${song.name}`}>
                                     <Row className="song" justify={"space-between"}>
                                         <Col>
-                                            <SongIcon/>
+                                            <SongIcon className="song-list-icon"/>
                                         </Col>
                                         <Col className="songInfoBox">
                                             <Paragraph className="songInfo songTitle">{song.name}</Paragraph>
