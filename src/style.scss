@@ -88,7 +88,7 @@ img {
   border-radius: 0 !important;
   width: 50px !important;
   border-bottom: 3px solid var(--charcoal) !important;
-  font-size: 24px;
+  font-size: 20px;
   position: absolute;
   bottom: -55px;
   right: 0;
@@ -108,7 +108,7 @@ input, textarea {
   border-radius: 0 !important;
   border: none !important;
   border-bottom: 2px solid var(--cream) !important;
-  font-size: 24px !important;
+  font-size: 20px !important;
   caret-color: var(--cream) !important;
   color: var(--cream) !important;
   max-width: 100% !important;
@@ -181,6 +181,11 @@ select:focus {
 .list-filter {
   padding: 30px;
   margin-top: 20px;
+
+  input {
+    width: 100%;
+    max-width: 480px !important;
+  }
 }
 
 .list {
@@ -249,7 +254,7 @@ select:focus {
       text-transform: uppercase;    
       margin-top: 85px  ;
       margin-bottom: 0;
-      font-size: 24px;
+      font-size: 20px;
       line-height: 35px;
     }
 
@@ -367,7 +372,7 @@ select:focus {
 .song-list-icon {
   width: 20vw;
   min-width: 100px;
-  max-width: 400px;
+  max-width: 200px;
 }
 
 .waveCont {
@@ -467,6 +472,11 @@ select:focus {
 .parsed-lyrics {
   margin-top: 40px;
 }
+
+// .filter-inner {
+//   display: flex;
+//   flex-direction: column;
+// }
 
 :root {
   --sienna: #8C5B3B;
