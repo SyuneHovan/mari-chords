@@ -66,11 +66,8 @@ export const SongPage = () => {
                             {line.map((wordObj, wordIndex) => (
 
                                 <span key={wordIndex} className="word-container">
+                                    <span className="chord">{wordObj.chords.map((chord) => chord).join(" ")}</span>
                                     <span className="word">{wordObj.word}</span>
-
-                                    <span className="chord">
-                                        {wordObj.chords.map((chord) => chord).join(" ")}
-                                    </span>
                                 </span>
                             ))}
 

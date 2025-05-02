@@ -10,6 +10,7 @@ import WaveIcon from "../../public/svgs/wave";
 import SongIcon from "../../public/svgs/song";
 import Paragraph from "antd/es/typography/Paragraph";
 import CategoryScroll from "../components/CategoryScroll";
+import HomeWaveIcon from "../../public/svgs/homeWave";
 
 
 export const List = () => {
@@ -41,8 +42,8 @@ export const List = () => {
 
     return (
         <>
-            <Header/>
-            <Row className="list" justify={"space-between"}>
+            <HomeWaveIcon className={"home-bg-wave"}/> 
+            <Row className="list-filter" justify={"space-between"}>
                 <Col>
                     <Row gutter={[12, 0]}>
                         <Col>
