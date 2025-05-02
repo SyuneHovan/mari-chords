@@ -51,7 +51,7 @@ export const SongPage = () => {
                                 <span className="word">{wordObj.word}</span>
 
                                 <span className="chord">
-                                    {wordObj.chord.map((chord) => chord).join(" ")}
+                                    {wordObj.chords.map((chord) => chord).join(" ")}
                                 </span>
                             </span>
                         ))}
