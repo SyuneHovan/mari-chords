@@ -35,6 +35,11 @@ body {
   }
 }
 
+#root {
+  overflow: hidden;
+}
+
+
 a {
   color: var(--crimson);
   text-decoration: none;
@@ -367,7 +372,6 @@ select:focus {
   position: relative;
   width: 100%;
 }
-
 :root {
   --sienna: #8C5B3B;
   --charcoal: #242424;
