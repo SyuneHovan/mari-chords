@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO;
 const SONGS_FILE_PATH = process.env.SONGS_FILE_PATH;
-const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "saving";
 
 // Set headers for GitHub API requests
 const headers = {
