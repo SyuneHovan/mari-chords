@@ -1163,5 +1163,20 @@
       ]
     ],
     "category": "Pop"
+  },
+  {
+    "name": "test 1",
+    "author": "test 1",
+    "lyrics": [
+      [
+        {
+          "word": "test1",
+          "chords": [
+            "T"
+          ]
+        }
+      ]
+    ],
+    "category": "Pop"
   }
 ]
