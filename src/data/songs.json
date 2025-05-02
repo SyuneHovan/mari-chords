@@ -598,5 +598,20 @@
       ]
     ],
     "category": "Pop"
+  },
+  {
+    "songTitle": "as",
+    "artist": "as",
+    "lyrics": [
+      [
+        {
+          "word": "as",
+          "chords": [
+            "s"
+          ]
+        }
+      ]
+    ],
+    "category": "Pop"
   }
 ]
