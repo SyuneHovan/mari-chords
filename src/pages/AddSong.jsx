@@ -4,8 +4,8 @@ import { Header } from "./Header";
 export const AddSong = () => {
     const [lyrics, setLyrics] = useState("");
     const [parsedLines, setParsedLines] = useState([]);
-    const [songTitle, setSongTitle] = useState("");
-    const [artist, setArtist] = useState("");
+    const [name, setName] = useState("");
+    const [author, setAuthor] = useState("");
     const [activeWord, setActiveWord] = useState(null);
   
     const handleLyricsSubmit = () => {
@@ -24,8 +24,8 @@ export const AddSong = () => {
     
     const handleSaveSong = async () => {
       const song = {
-        songTitle,
-        artist,
+        name,
+        author,
         lyrics: parsedLines,
         category: "Pop" // Example category
       };
@@ -46,8 +46,8 @@ export const AddSong = () => {
       })
       .then(data => {
           console.log("Success saving the song 1:", data.message);
-          setSongTitle("");
-          setArtist("");
+          setName("");
+          setAuthor("");
           setParsedLines([]);
       })
       .catch(error => {
@@ -71,8 +71,8 @@ export const AddSong = () => {
       //     log("WEEEEEEE")
       //     alert(data.message);
       //     // Reset fields
-      //     setSongTitle("");
-      //     setArtist("");
+      //     setName("");
+      //     setAuthor("");
       //     setParsedLines([]);
       //   })
       //   .catch(error => {
@@ -93,18 +93,18 @@ export const AddSong = () => {
               Song Title:
               <input
                 type="text"
-                value={songTitle}
-                onChange={e => setSongTitle(e.target.value)}
+                value={name}
+                onChange={e => setName(e.target.value)}
                 style={{ marginLeft: "10px" }}
               />
             </label>
             <br />
             <label>
-              Artist:
+              Author:
               <input
                 type="text"
-                value={artist}
-                onChange={e => setArtist(e.target.value)}
+                value={author}
+                onChange={e => setAuthor(e.target.value)}
                 style={{ marginLeft: "10px", marginTop: "10px" }}
               />
             </label>

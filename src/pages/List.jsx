@@ -13,6 +13,8 @@ export const List = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [filteredSongs, setFilteredSongs] = useState(songs);
 
+    console.log("songs", songs)
+
     useEffect(() => {
         setFilteredSongs(
             songs.filter(song =>

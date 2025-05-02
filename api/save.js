@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         console.error("GITHUB_TOKEN is missing");
         return res.status(500).json({ error: "Server configuration error" });
     }
-    if (!song || !song.songTitle || !song.artist) {
+    if (!song || !song.name || !song.author) {
         console.error("Invalid song data:", song);
         return res.status(400).json({ error: "Song data is incomplete" });
     }
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
         // Prepare updated content
         const updatedContent = JSON.stringify(songs, null, 2);
         const commitData = {
-            message: `Add song: ${song.songTitle}`,
+            message: `Add song: ${song.name}`,
             content: Buffer.from(updatedContent).toString("base64"),
             branch: BRANCH
         };
