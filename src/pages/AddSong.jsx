@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { Header } from "./Header";
+import WaveIcon from "../../public/svgs/wave";
+import BackIcon from "../../public/svgs/back";
+import { useNavigate } from "react-router-dom";
+import TextArea from "antd/es/input/TextArea";
+import NextDownIcon from "../../public/svgs/nextDown";
+import DoneIcon from "../../public/svgs/done";
+import { Col, Row } from "antd";
 
 export const AddSong = () => {
     const [lyrics, setLyrics] = useState("");
@@ -7,7 +14,12 @@ export const AddSong = () => {
     const [name, setName] = useState("");
     const [author, setAuthor] = useState("");
     const [activeWord, setActiveWord] = useState(null);
-  
+    const navigate = useNavigate();
+    
+    const handleNavigate = () => {
+        navigate(-1);
+    };
+
     const handleLyricsSubmit = () => {
       const lines = lyrics.split("\n").map(line =>
         line.split(/\s+/).map(word => ({ word, chords: [] }))
@@ -49,145 +61,99 @@ export const AddSong = () => {
           setName("");
           setAuthor("");
           setParsedLines([]);
+          navigate("/")
       })
       .catch(error => {
           console.log("Error saving the song 1:", error);
       });
-
-      // fetch(`${window.location.origin}/api/addSong`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   },
-      //   body: JSON.stringify(song)
-      // })      
-      //   .then(response => {
-      //     if (!response.ok) {
-      //       throw new Error("Failed to save the song");
-      //     }
-      //     return response.json();
-      //   })
-      //   .then(data => {
-      //     log("WEEEEEEE")
-      //     alert(data.message);
-      //     // Reset fields
-      //     setName("");
-      //     setAuthor("");
-      //     setParsedLines([]);
-      //   })
-      //   .catch(error => {
-      //     console.error("Error:", error);
-      //     alert("Error saving the song");
-      //   });
     };
   
     return (
       <>
         <Header/>
-        <div>
-          <h1>Add New Song</h1>
+        <WaveIcon className="addButton" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
+        <div className="add-song">
+          <h1>paste song lyrics, then assign chords.</h1>
     
           {/* Metadata Inputs */}
-          <div style={{ marginBottom: "20px" }}>
-            <label>
-              Song Title:
-              <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                style={{ marginLeft: "10px" }}
-              />
-            </label>
+          <div >
+            <input
+              type="text"
+              value={name}
+              placeholder="song title"
+              onChange={e => setName(e.target.value)}
+            />
             <br />
-            <label>
-              Author:
-              <input
-                type="text"
-                value={author}
-                onChange={e => setAuthor(e.target.value)}
-                style={{ marginLeft: "10px", marginTop: "10px" }}
-              />
-            </label>
+            <br />
+            <input
+              type="text"
+              value={author}
+              placeholder="author"
+              onChange={e => setAuthor(e.target.value)}
+            />
           </div>
+          <br />
+          <br />
     
           {/* Lyrics Input */}
           <div>
-            <textarea
+            <TextArea
               value={lyrics}
               onChange={e => setLyrics(e.target.value)}
-              placeholder="Paste lyrics here..."
-              rows={5}
-              style={{ width: "100%", marginBottom: "10px" }}
+              placeholder="paste lyrics here..."
+              rows={10}
             />
             <button onClick={handleLyricsSubmit} style={{ display: "block" }}>
-              Parse Lyrics
+              <NextDownIcon/>
             </button>
           </div>
     
           {/* Parsed Lyrics for Chord Assignment */}
           {parsedLines.length > 0 && (
-            <div>
-              <h2>Assign Chords</h2>
-              {parsedLines.map((line, lineIndex) => (
-                <div key={lineIndex} style={{ marginBottom: "10px" }}>
-                  {line.map((wordObj, wordIndex) => (
-                    <span
-                      key={wordIndex}
-                      style={{
-                        display: "inline-block",
-                        marginRight: "10px",
-                        position: "relative",
-                        cursor: "pointer"
-                      }}
-                      onClick={e => {
-                        e.stopPropagation();
-                        setActiveWord({ lineIndex, wordIndex });
-                      }}
-                    >
-                      <span style={{ fontWeight: "bold" }}>{wordObj.word}</span>
-                      {wordObj.chords.length > 0 && (
-                        <span
-                          style={{
-                            display:
-                              activeWord?.lineIndex === lineIndex &&
-                              activeWord?.wordIndex === wordIndex
-                                ? "none"
-                                : "block",
-                            color: "black",
-                            position: "absolute",
-                            top: "-20px"
-                          }}
-                        >
-                          {wordObj.chords.join(", ")}
-                        </span>
-                      )}
-                      {activeWord?.lineIndex === lineIndex &&
-                        activeWord?.wordIndex === wordIndex && (
-                          <input
-                            type="text"
-                            value={wordObj.chords.join(",")}
-                            onChange={e =>
-                              handleChordChange(lineIndex, wordIndex, e.target.value)
-                            }
-                            style={{
-                              position: "absolute",
-                              top: "-30px",
-                              left: "0",
-                              width: "80px"
-                            }}
-                          />
+            <>
+              <div>
+                
+                {parsedLines.map((line, lineIndex) => (
+                  <div key={lineIndex} className="add-line">
+                    {line.map((wordObj, wordIndex) => (
+                      <span
+                        key={wordIndex}
+                        className="add-word-box"
+                        onClick={e => {
+                          e.stopPropagation();
+                          setActiveWord({ lineIndex, wordIndex });
+                        }}
+                      >
+                        {wordObj.chords.length > 0 && 
+                        (activeWord?.lineIndex !== lineIndex || activeWord?.wordIndex !== wordIndex) && (
+                          <span className="add-chord">{wordObj.chords.join(", ")}</span>
                         )}
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
+                        <span className="add-word">{wordObj.word}</span>
+                        {activeWord?.lineIndex === lineIndex &&
+                          activeWord?.wordIndex === wordIndex && (
+                            <input
+                              className="add-chord-input"
+                              type="text"
+                              value={wordObj.chords.join(",")}
+                              onChange={e =>
+                                handleChordChange(lineIndex, wordIndex, e.target.value)
+                              }
+                            />
+                          )}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
+      
+              {/* Save Button */}
+              <div style={{ marginTop: "20px" }}>
+                <button onClick={handleSaveSong}>
+                  <DoneIcon/>
+                </button>
+              </div>
+            </>
           )}
-    
-          {/* Save Button */}
-          <div style={{ marginTop: "20px" }}>
-            <button onClick={handleSaveSong}>Save Song</button>
-          </div>
         </div>
       </>
     );
