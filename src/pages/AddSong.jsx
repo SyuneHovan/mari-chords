@@ -153,7 +153,7 @@ export const AddSong = () => {
                               activeWord?.wordIndex === wordIndex
                                 ? "none"
                                 : "block",
-                            color: "blue",
+                            color: "black",
                             position: "absolute",
                             top: "-20px"
                           }}
