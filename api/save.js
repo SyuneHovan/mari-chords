@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
     const { content } = req.body;
 
-    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json}`;
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json`;
 
     try {
         const fileRes = await fetch(url, {
