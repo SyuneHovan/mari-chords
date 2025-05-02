@@ -51,20 +51,20 @@ export const AddSong = () => {
       })
       .then(response => {
           if (!response.ok) {
-              console.error("Failed to save the song 2", response);
+              console.error("Failed to save the song", response);
               throw new Error("Failed to save the song");
           }
           return response.json();
       })
       .then(data => {
-          console.log("Success saving the song 1:", data.message);
+          console.log("Success saving the song:", data.message);
           setName("");
           setAuthor("");
           setParsedLines([]);
           navigate("/")
       })
       .catch(error => {
-          console.log("Error saving the song 1:", error);
+          console.log("Error saving the song:", error);
       });
     };
   
@@ -101,7 +101,7 @@ export const AddSong = () => {
               value={lyrics}
               onChange={e => setLyrics(e.target.value)}
               placeholder="paste lyrics here..."
-              rows={10}
+              rows={6}
             />
             <button onClick={handleLyricsSubmit} style={{ display: "block" }}>
               <NextDownIcon/>
@@ -111,7 +111,7 @@ export const AddSong = () => {
           {/* Parsed Lyrics for Chord Assignment */}
           {parsedLines.length > 0 && (
             <>
-              <div>
+              <div className="parsed-lyrics">
                 
                 {parsedLines.map((line, lineIndex) => (
                   <div key={lineIndex} className="add-line">
@@ -147,11 +147,9 @@ export const AddSong = () => {
               </div>
       
               {/* Save Button */}
-              <div style={{ marginTop: "20px" }}>
-                <button onClick={handleSaveSong}>
-                  <DoneIcon/>
-                </button>
-              </div>
+              <button onClick={handleSaveSong}>
+                <DoneIcon/>
+              </button>
             </>
           )}
         </div>

@@ -48,7 +48,7 @@ export const SongPage = () => {
                 <h3>{song.name}</h3>
                 <h4>{song.author}</h4>
                 
-                <Button onClick={() => setAutoScroll(!autoScroll)}>
+                <Button onClick={() => setAutoScroll(!autoScroll)} className={"playButton"}>
                     {autoScroll ? <PauseIcon/> : <PlayIcon/>} 
                 </Button>
 
