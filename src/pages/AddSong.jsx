@@ -72,7 +72,7 @@ export const AddSong = () => {
     return (
       <>
         <Header/>
-        <WaveIcon className="waveButton" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
+        <WaveIcon className="waveButton" waveClassName="toTop" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
         <div className="add-song">
           <h1>paste song lyrics, then assign chords.</h1>
     
