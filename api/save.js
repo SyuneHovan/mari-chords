@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
     const GITHUB_REPO = "SyuneHovan/mari-chords";
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const BRANCH = "main"; // Replace with your default branch if not 'main'
+    const BRANCH = "main";
     const { song } = req.body;
 
     console.log("API handler invoked with body:", req.body);
