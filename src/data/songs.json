@@ -1271,31 +1271,6 @@
       ]
     ]
   },
-  {
-    "name": "Fff",
-    "author": "Rrrr",
-    "category": "Hshs",
-    "lyrics": [
-      [
-        {
-          "word": "Bdjd",
-          "chords": [
-            "G"
-          ]
-        },
-        {
-          "word": "jshs",
-          "chords": [
-            "U"
-          ]
-        },
-        {
-          "word": "jdnd",
-          "chords": []
-        }
-      ]
-    ]
-  },
     {
     "name": "ПММЛ",
     "author": "Земфира",
@@ -1698,5 +1673,418 @@
     }
     ]
     ]
-    }
+    },
+      {
+        "name": "Искала",
+        "author": "Земфира",
+        "category": "Pop Rock",
+        "lyrics": [
+          [
+            {
+              "word": "Я",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "искала",
+              "chords": []
+            },
+            {
+              "word": "тебя",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "среди",
+              "chords": []
+            },
+            {
+              "word": "звезд",
+              "chords": [
+                "G"
+              ]
+            }
+          ],
+          [
+            {
+              "word": "И",
+              "chords": []
+            },
+            {
+              "word": "находила",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "лишь",
+              "chords": []
+            },
+            {
+              "word": "пустоту",
+              "chords": [
+                "E"
+              ]
+            }
+          ],
+          [
+            {
+              "word": "Где",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "ты",
+              "chords": []
+            },
+            {
+              "word": "был,",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "я",
+              "chords": []
+            },
+            {
+              "word": "не",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "знала",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Но",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "всё",
+              "chords": []
+            },
+            {
+              "word": "равно",
+              "chords": [
+                "E"
+              ]
+            },
+            {
+              "word": "искала",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Я",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "бежала",
+              "chords": []
+            },
+            {
+              "word": "по",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "переулкам",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "И",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "падала",
+              "chords": []
+            },
+            {
+              "word": "в",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "темноте",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Ты",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "был",
+              "chords": []
+            },
+            {
+              "word": "так",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "близко,",
+              "chords": []
+            },
+            {
+              "word": "но",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "не",
+              "chords": []
+            },
+            {
+              "word": "рядом",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "И",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "я",
+              "chords": []
+            },
+            {
+              "word": "всё",
+              "chords": [
+                "E"
+              ]
+            },
+            {
+              "word": "искала",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Я",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "кричала",
+              "chords": []
+            },
+            {
+              "word": "в",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "тишину",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "И",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "слышала",
+              "chords": []
+            },
+            {
+              "word": "лишь",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "эхо",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Ты",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "молчал,",
+              "chords": []
+            },
+            {
+              "word": "я",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "устала",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Но",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "всё",
+              "chords": []
+            },
+            {
+              "word": "равно",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "искала",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Я",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "нашла",
+              "chords": []
+            },
+            {
+              "word": "тебя",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "в",
+              "chords": []
+            },
+            {
+              "word": "своем",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "сердце",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "И",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "поняла,",
+              "chords": []
+            },
+            {
+              "word": "что",
+              "chords": [
+                "E"
+              ]
+            },
+            {
+              "word": "ты",
+              "chords": []
+            },
+            {
+              "word": "мой",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Теперь",
+              "chords": [
+                "Am"
+              ]
+            },
+            {
+              "word": "я",
+              "chords": []
+            },
+            {
+              "word": "не",
+              "chords": [
+                "F"
+              ]
+            },
+            {
+              "word": "ищу,",
+              "chords": []
+            },
+            {
+              "word": "я",
+              "chords": [
+                "G"
+              ]
+            },
+            {
+              "word": "знаю",
+              "chords": []
+            }
+          ],
+          [
+            {
+              "word": "Ты",
+              "chords": [
+                "C"
+              ]
+            },
+            {
+              "word": "всегда",
+              "chords": []
+            },
+            {
+              "word": "со",
+              "chords": [
+                "E"
+              ]
+            },
+            {
+              "word": "мной",
+              "chords": []
+            }
+          ]
+        ]
+      }
     ]
