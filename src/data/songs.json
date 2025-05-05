@@ -1394,79 +1394,44 @@
     "word": "любовь",
     "chords": []
     }
-    ]
-    ]
-    },
-    {
-    "name": "Искала",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
+    ],
     [
     {
-    "word": "Я",
+    "word": "Поздно.",
     "chords": [
     "Am"
     ]
     },
     {
-    "word": "искала",
-    "chords": []
-    },
-    {
-    "word": "тебя",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "среди",
-    "chords": []
-    },
-    {
-    "word": "звезд",
+    "word": "О",
     "chords": [
     "G"
     ]
-    }
-    ],
-    [
+    },
     {
-    "word": "И",
+    "word": "чем-то",
     "chords": []
     },
     {
-    "word": "находила",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "лишь",
-    "chords": []
-    },
-    {
-    "word": "пустоту",
-    "chords": [
-    "E"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Где",
+    "word": "думать",
     "chords": [
     "Am"
     ]
     },
     {
-    "word": "ты",
+    "word": "слишком",
     "chords": []
     },
     {
-    "word": "был,",
+    "word": "поздно",
+    "chords": []
+    }
+    ],
+    [
+    {
+    "word": "Тебе,",
     "chords": [
-    "F"
+    "G"
     ]
     },
     {
@@ -1474,167 +1439,65 @@
     "chords": []
     },
     {
-    "word": "не",
+    "word": "чую,",
+    "chords": []
+    },
+    {
+    "word": "нужен",
     "chords": [
-    "G"
+    "Dm"
     ]
     },
     {
-    "word": "знала",
+    "word": "воздух",
     "chords": []
     }
     ],
     [
     {
-    "word": "Но",
+    "word": "Лежим",
     "chords": [
-    "C"
+    "G"
     ]
     },
     {
-    "word": "всё",
+    "word": "в",
     "chords": []
     },
     {
-    "word": "равно",
+    "word": "такой",
     "chords": [
     "E"
     ]
     },
     {
-    "word": "искала",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Хочешь?",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Пожалуйста,",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "не",
+    "word": "огромной",
     "chords": []
     },
     {
-    "word": "умирай,",
-    "chords": [
-    "G"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Или",
-    "chords": []
-    },
-    {
-    "word": "мне",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "придётся",
-    "chords": []
-    },
-    {
-    "word": "тоже",
-    "chords": [
-    "F"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Ты",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "ведь",
-    "chords": []
-    },
-    {
-    "word": "не",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "знаешь,",
+    "word": "луже",
     "chords": []
     }
     ],
     [
     {
-    "word": "Как",
+    "word": "Прости",
     "chords": [
-    "Am"
+    "Dm"
     ]
     },
     {
-    "word": "больно",
+    "word": "меня,",
     "chords": []
     },
     {
-    "word": "будет",
+    "word": "моя",
     "chords": [
-    "F"
+    "E7"
     ]
     },
     {
-    "word": "мне",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Ромашки",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Мне",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "нравятся",
-    "chords": []
-    },
-    {
-    "word": "ромашки",
-    "chords": [
-    "G"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "И",
-    "chords": []
-    },
-    {
-    "word": "белые",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "облака",
+    "word": "любовь",
     "chords": []
     }
     ],
@@ -1646,617 +1509,121 @@
     ]
     },
     {
-    "word": "хочу",
+    "word": "не",
     "chords": []
     },
     {
-    "word": "быть",
+    "word": "хочу",
     "chords": [
     "G"
     ]
     },
     {
-    "word": "с",
+    "word": "умирать",
     "chords": []
-    },
-    {
-    "word": "тобой",
-    "chords": [
-    "C"
-    ]
     }
     ],
     [
     {
     "word": "Но",
     "chords": [
-    "F"
+    "Am"
     ]
+    },
+    {
+    "word": "придется,",
+    "chords": [
+    "G"
+    ]
+    },
+    {
+    "word": "если",
+    "chords": []
+    },
+    {
+    "word": "ты",
+    "chords": [
+    "Dm"
+    ]
+    },
+    {
+    "word": "уйдешь",
+    "chords": []
+    }
+    ],
+    [
+    {
+    "word": "Ты",
+    "chords": [
+    "G"
+    ]
+    },
+    {
+    "word": "же",
+    "chords": []
+    },
+    {
+    "word": "знаешь,",
+    "chords": [
+    "E"
+    ]
+    },
+    {
+    "word": "как",
+    "chords": []
     },
     {
     "word": "это",
     "chords": []
     },
     {
-    "word": "невозможно",
-    "chords": [
-    "G"
-    ]
+    "word": "больно",
+    "chords": []
     }
-    ]
-    ]
-    },
-    {
-    "name": "До свидания...",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
+    ],
     [
     {
-    "word": "Мой",
+    "word": "Прости",
     "chords": [
     "Dm"
     ]
     },
     {
-    "word": "мальчик",
+    "word": "меня,",
     "chords": []
     },
     {
-    "word": "спит",
+    "word": "моя",
     "chords": [
-    "G"
+    "E7"
     ]
     },
     {
-    "word": "на",
+    "word": "любовь",
     "chords": []
-    },
-    {
-    "word": "стуле",
-    "chords": [
-    "C"
-    ]
     }
     ],
     [
     {
-    "word": "Свет",
+    "word": "Море",
     "chords": [
     "Am"
-    ]
-    },
-    {
-    "word": "в",
-    "chords": []
-    },
-    {
-    "word": "окне",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "горит",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Я",
-    "chords": [
-    "Dm"
-    ]
-    },
-    {
-    "word": "не",
-    "chords": []
-    },
-    {
-    "word": "хочу",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "уходить",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Но",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "надо,",
-    "chords": []
-    },
-    {
-    "word": "до",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "свидания",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Почему",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Ты",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "спросишь,",
-    "chords": []
-    },
-    {
-    "word": "а",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "я",
-    "chords": []
-    },
-    {
-    "word": "молчу",
-    "chords": [
-    "C"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Почему-то",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "не",
-    "chords": []
-    },
-    {
-    "word": "говорю",
-    "chords": [
-    "G"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Может",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "потому,",
-    "chords": []
-    },
-    {
-    "word": "что",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "боюсь",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Или",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "просто",
-    "chords": []
-    },
-    {
-    "word": "не",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "хочу",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Снег",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Снег",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "идёт,",
-    "chords": []
-    },
-    {
-    "word": "а",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "я",
-    "chords": []
-    },
-    {
-    "word": "жду",
-    "chords": [
-    "C"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Тебя",
-    "chords": [
-    "F"
     ]
     },
     {
     "word": "всё",
-    "chords": []
-    },
-    {
-    "word": "нет",
     "chords": [
     "G"
     ]
     },
     {
-    "word": "и",
+    "word": "шепчет,",
     "chords": []
     },
     {
-    "word": "нет",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Может",
+    "word": "зовёт",
     "chords": [
     "Am"
-    ]
-    },
-    {
-    "word": "ты",
-    "chords": []
-    },
-    {
-    "word": "забыл",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "меня",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Или",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "просто",
-    "chords": []
-    },
-    {
-    "word": "не",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "придёшь",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Гора",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Я",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "стою",
-    "chords": []
-    },
-    {
-    "word": "на",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "горе",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "И",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "вижу",
-    "chords": []
-    },
-    {
-    "word": "море",
-    "chords": [
-    "F"
-    ]
-    }
-    ],
-    [
-    {
-    "word": "Ты",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "где-то",
-    "chords": []
-    },
-    {
-    "word": "там,",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "внизу",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Я",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "зову,",
-    "chords": []
-    },
-    {
-    "word": "но",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "ты",
-    "chords": []
-    },
-    {
-    "word": "не",
-    "chords": []
-    },
-    {
-    "word": "слышишь",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Кто?",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Кто",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "сказал,",
-    "chords": []
-    },
-    {
-    "word": "что",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "я",
-    "chords": []
-    },
-    {
-    "word": "не",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "смогу?",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Кто",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "решил",
-    "chords": []
-    },
-    {
-    "word": "за",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "меня?",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Я",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "иду,",
-    "chords": []
-    },
-    {
-    "word": "я",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "живу",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "И",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "никому",
-    "chords": []
-    },
-    {
-    "word": "не",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "отдам",
-    "chords": []
-    }
-    ]
-    ]
-    },
-    {
-    "name": "Лондон",
-    "author": "Земфира",
-    "category": "Pop Rock",
-    "lyrics": [
-    [
-    {
-    "word": "Я",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "хочу",
-    "chords": []
-    },
-    {
-    "word": "в",
-    "chords": [
-    "G"
-    ]
-    },
-    {
-    "word": "Лондон",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Где",
-    "chords": [
-    "Am"
-    ]
-    },
-    {
-    "word": "дожди",
-    "chords": []
-    },
-    {
-    "word": "и",
-    "chords": [
-    "F"
-    ]
-    },
-    {
-    "word": "туман",
-    "chords": []
-    }
-    ],
-    [
-    {
-    "word": "Там",
-    "chords": [
-    "C"
-    ]
-    },
-    {
-    "word": "мои",
-    "chords": []
-    },
-    {
-    "word": "мечты",
-    "chords": [
-    "G"
     ]
     }
     ],
@@ -2264,25 +1631,69 @@
     {
     "word": "И",
     "chords": [
-    "Am"
+    "G"
     ]
     },
     {
-    "word": "никто",
+    "word": "волны",
     "chords": []
     },
     {
-    "word": "не",
+    "word": "бьют",
     "chords": [
-    "F"
+    "Dm"
     ]
     },
     {
-    "word": "нужен",
+    "word": "по",
     "chords": []
     },
     {
-    "word": "мне",
+    "word": "берегу",
+    "chords": []
+    }
+    ],
+    [
+    {
+    "word": "Мы",
+    "chords": [
+    "G"
+    ]
+    },
+    {
+    "word": "останемся",
+    "chords": []
+    },
+    {
+    "word": "здесь,",
+    "chords": [
+    "E"
+    ]
+    },
+    {
+    "word": "вдвоём",
+    "chords": []
+    }
+    ],
+    [
+    {
+    "word": "Прости",
+    "chords": [
+    "Dm"
+    ]
+    },
+    {
+    "word": "меня,",
+    "chords": []
+    },
+    {
+    "word": "моя",
+    "chords": [
+    "E7"
+    ]
+    },
+    {
+    "word": "любовь",
     "chords": []
     }
     ]
