@@ -26,7 +26,7 @@ export const List = () => {
   // Fetch songs from the GitHub-hosted songs.json
   const fetchSongs = async () => {
     try {
-      const response = await fetch("/src/data/songs.json");
+      const response = await fetch("/data/songs.json");
       if (!response.ok) {
         throw new Error("Failed to fetch songs");
       }

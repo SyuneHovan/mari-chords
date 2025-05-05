@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "Song data is incomplete" });
     }
 
-    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json?ref=${BRANCH}`;
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/data/songs.json?ref=${BRANCH}`;
 
     try {
         // Fetch current file

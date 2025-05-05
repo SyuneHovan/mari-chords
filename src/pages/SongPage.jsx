@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../components/Button";
-import songs from "../data/songs.json";
+import songs from "../../public/data/songs.json";
 import { Header } from "./Header";
 import { Col, InputNumber, Row } from "antd";
 import ScrollIcon from "../../public/svgs/scroll";
