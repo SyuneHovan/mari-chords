@@ -397,7 +397,7 @@ select:focus {
   margin: 0 -30px
 }
 
-.catScrollButton.catScrollButton:not(.active),.catScrollButton:hover.catScrollButton:not(.active),.popup button.catScrollButton:not(.active),.popup button:hover.catScrollButton:not(.active) {
+.catScrollButtonBox button:not(.active) {
   opacity: .5
 }
 
