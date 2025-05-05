@@ -5,7 +5,6 @@ export default async function handler(req, res) {
   
     const GITHUB_REPO = "SyuneHovan/mari-chords";
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const BRANCH = "main";
     const { songName } = req.body;
   
     console.log("API handler invoked with body:", req.body);
@@ -21,7 +20,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Song name is required" });
     }
   
-    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json?ref=${BRANCH}`;
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/src/data/songs.json`;
   
     try {
       // Fetch current file
@@ -72,7 +71,6 @@ export default async function handler(req, res) {
       const commitData = {
         message: `Delete song: ${songName}`,
         content: Buffer.from(updatedContent).toString("base64"),
-        branch: BRANCH,
         sha,
       };
   
