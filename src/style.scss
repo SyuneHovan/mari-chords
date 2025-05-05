@@ -528,22 +528,18 @@ select:focus {
   scrollbar-width: none
 }
 
-.addButtonContainer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  justify-content: start;
-  align-items: center
-}
-
-.addButton {
+.waveButton {
   justify-content: center;
   display: flex;
   border-radius: 100px;
   align-items: center;
   width: 100px;
   height: 100px;
-  z-index: 1
+  z-index: 1;
+}
+
+.addButton {
+  z-index: 2;
 }
 
 .wave {

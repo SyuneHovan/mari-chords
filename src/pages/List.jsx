@@ -69,7 +69,7 @@ export const List = () => {
                 </Col>
             </Row>
 
-            <WaveIcon className="addButton" pos="bottom left" onClick={handleNavigate} icon={<AddIcon/>}/>
+            <WaveIcon className="waveButton" pos="bottom left" onClick={handleNavigate} icon={<AddIcon/>}/>
         </>
     );
 };
