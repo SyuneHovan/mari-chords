@@ -41,7 +41,7 @@ export const SongPage = () => {
     return song ? (
     <div>
         <Header />
-        <WaveIcon className="addButton" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
+        <WaveIcon className="waveButton" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
         <div className="song-page-container">
             <div className="song-page-header">
                 <SongViewIcon/>
