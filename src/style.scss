@@ -1,3 +1,8 @@
+pre,code,kbd,samp {
+  font-size: 1em;
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace
+}
+
 html,body {
   width: 100%;
   height: 100%
@@ -347,17 +352,18 @@ img {
   padding: 0!important
 }
 
-input,textarea {
-  padding: 10px 0!important;
-  background: transparent!important;
-  border-radius: 0!important;
-  border: none!important;
-  border-bottom: 2px solid var(--cream)!important;
-  font-size: 20px!important;
-  caret-color: var(--cream)!important;
-  color: var(--cream)!important;
-  max-width: 100%!important;
-  outline: none!important
+input, textarea {
+  padding: 10px 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 2px solid var(--cream) !important;
+  font-size: 20px !important;
+  caret-color: var(--cream) !important;
+  color: var(--cream) !important;
+  max-width: 420px;
+  outline: none !important;
+  width: 100%;
 }
 
 input::placeholder,textarea::placeholder {
@@ -391,26 +397,8 @@ select:focus {
   margin: 0 -30px
 }
 
-.catScrollButton,
-.catScrollButton:hover,
-.popup button,
-.popup button:hover {
-  background-color: var(--cream);
-  color: var(--sage);
-  border: none;
-  padding: 2px 10px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 6px;
-  width: max-content;
-  height: max-content;
-  box-shadow: none;
-  opacity: 1;
-  margin: 0;
-  
-  &.catScrollButton:not(.active) {
-    opacity: .5;
-  }
+.catScrollButton.catScrollButton:not(.active),.catScrollButton:hover.catScrollButton:not(.active),.popup button.catScrollButton:not(.active),.popup button:hover.catScrollButton:not(.active) {
+  opacity: .5
 }
 
 .list-filter {
@@ -538,18 +526,18 @@ select:focus {
   align-items: center;
   width: 100px;
   height: 100px;
-  z-index: 1;
+  z-index: 1
 }
 
 .toTop {
-  z-index: 2;
+  z-index: 2
 }
 
 .wave {
   position: absolute;
   width: 60%;
   z-index: -1;
-  max-width: 220px;
+  max-width: 220px
 }
 
 .wave.top.right {
@@ -581,7 +569,8 @@ select:focus {
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  margin-bottom: 20px
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .songInfoBox .songInfo {
@@ -647,16 +636,15 @@ select:focus {
   position: relative
 }
 
-.add-song>h1 {
+.add-song > h1 {
   color: var(--cream);
   font-weight: 600;
   position: absolute;
   top: -30px;
-  right: 25px;
-  font-size: 22px;
-  max-width: 40vw;
-  line-height: 30px;
-  letter-spacing: 1px
+  right: 20px;
+  font-size: 23px;
+  max-width: 45vw;
+  line-height: 27px;
 }
 
 .add-word-box {
@@ -690,7 +678,7 @@ select:focus {
   position: absolute;
   z-index: -1;
   top: -28vw;
-  width: 100%;
+  width: 100%
 }
 
 .playButton {
@@ -706,18 +694,17 @@ select:focus {
   margin-top: 40px
 }
 
-// swiping
 li {
   list-style: none;
-  width: 100%;
-  transition: transform 0.3s ease-out; /* Smooth return animation */
+  width:100%;
+  transition: transform .3s ease-out
 }
 
 .popup {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-50%);
   z-index: 1000;
   color: var(--charcoal);
   font-weight: 600;
@@ -730,68 +717,109 @@ li {
   flex-direction: column;
   gap: 20px;
   padding: 0;
-  background: transparent;
+  background: transparent
+}
 
-  .button-group {
-    display: flex;
-    gap: 20px;
-    position: absolute;
-    bottom: 20%;
-  }
+.popup .button-group {
+  display: flex;
+  gap: 20px;
+  position: absolute;
+  bottom: 20%
+}
 
-  p {
-    margin: 0 0 15px;
-    text-align: center;
-    position: absolute;
-    top: 38%;
-    max-width: 70%;
-    background: var(--cream);
-    font-size: 13px;
-  }
+.popup p {
+  margin: 0 0 15px;
+  text-align: center;
+  position: absolute;
+  top: 38%;
+  max-width: 70%;
+  background: var(--cream);
+  font-size: 13px
 }
 
 span.delete-popup {
-  width: 100%;
+  width: 100%
 }
 
-// background color
 .bg-sienna {
-  background-color: #8C5B3B !important;
-  color: #FEF1DE !important;
-}
-.bg-charcoal {
-  background-color: #242424 !important;
-  color: #FEF1DE !important;
-}
-.bg-terracotta {
-  background-color: #B46E4C !important;
-  color: #FEF1DE !important;
-}
-.bg-cream {
-  background-color: #FEF1DE !important;
-  color: #64826A !important;
-}
-.bg-sage {
-  background-color: #64826A !important;
-  color: #FEF1DE !important;
+  background-color: #8c5b3b!important;
+  color: #fef1de!important
 }
 
-// text color
+.bg-charcoal {
+  background-color: #242424!important;
+  color: #fef1de!important
+}
+
+.bg-terracotta {
+  background-color: #b46e4c!important;
+  color: #fef1de!important
+}
+
+.bg-cream {
+  background-color: #fef1de!important;
+  color: #64826a!important
+}
+
+.bg-sage {
+  background-color: #64826a!important;
+  color: #fef1de!important
+}
+
 .tc-sienna {
-  color: #8C5B3B !important;
+  color: #8c5b3b!important
 }
+
 .tc-charcoal {
-  color: #242424 !important;
+  color: #242424!important
 }
+
 .tc-terracotta {
-  color: #B46E4C !important;
+  color: #b46e4c!important
 }
+
 .tc-cream {
-  color: #FEF1DE !important;
+  color: #fef1de!important
 }
+
 .tc-sage {
-  color: #64826A !important;
+  color: #64826a!important
 }
+
+.flying {
+  input {
+    width: 80px;
+    margin-right: 5px;
+    background: var(--cream) !important;
+    color: var(--charcoal) !important;
+    caret-color: var(--charcoal) !important;
+    border-radius: 8px !important;
+    padding: 5px 10px !important;
+    z-index: 10;
+    position: relative;
+  }
+  button {
+    z-index: 10;
+    position: relative;
+  }
+}
+
+button.small,
+button.small:hover {
+  background-color: var(--cream);
+  color: var(--sage);
+  border: none;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 6px;
+  width: max-content;
+  height: max-content;
+  box-shadow: none;
+  opacity: 1;
+  margin: 0;
+  text-wrap: nowrap;
+} 
 
 :root {
   --sienna: #8C5B3B;
@@ -803,10 +831,17 @@ span.delete-popup {
 
 @media (width > 480px) {
   .list ul {
-      display: flex;  
+      display: flex;
       flex-wrap: wrap;
+
+      li {
+          width: max-content
+      }
   }
+
   .song {
       flex-direction: column;
+      width: min-content;
+      align-items: center;
   }
 }

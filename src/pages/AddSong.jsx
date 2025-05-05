@@ -92,14 +92,14 @@ export const AddSong = () => {
               placeholder="author"
               onChange={e => setAuthor(e.target.value)}
             />
-            <br />
+            {/* <br />
             <br />
             <input
               type="text"
               value={category}
-              placeholder="category"
+              placeholder="group"
               onChange={e => setCategory(e.target.value)}
-            />
+            /> */}
           </div>
           <br />
           <br />

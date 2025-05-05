@@ -15,8 +15,9 @@ import DeletePopupIcon from "../../public/svgs/deletePopup";
 export const List = () => {
   const [filter, setFilter] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [category, setCategory] = useState([]);
+  const [author, setAuthor] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
+  const [allSongs, setAllSongs] = useState([]);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
@@ -31,12 +32,13 @@ export const List = () => {
         throw new Error("Failed to fetch songs");
       }
       const songsData = await response.json();
-      setFilteredSongs(songsData);
-      setCategory([
+      setAllSongs(songsData); // ← store full list
+      setFilteredSongs(songsData); // ← initially show all
+      setAuthor([
         { value: "", label: "All" },
-        ...[...new Set(songsData.map((song) => song.category))].map((category) => ({
-          value: category,
-          label: category,
+        ...[...new Set(songsData.map((song) => song.author))].map((author) => ({
+          value: author,
+          label: author,
         })),
       ]);
     } catch (error) {
@@ -48,14 +50,15 @@ export const List = () => {
     fetchSongs();
   }, []);
 
+  // Fix filter logic: always filter from allSongs
   useEffect(() => {
-    const filtered = filteredSongs.filter(
+    const filtered = allSongs.filter(
       (song) =>
         song.name.toLowerCase().includes(filter.toLowerCase()) &&
-        (selectedCategory === "" || song.category === selectedCategory)
+        (selectedCategory === "" || song.author === selectedCategory)
     );
     setFilteredSongs(filtered);
-  }, [filter, selectedCategory]);
+  }, [filter, selectedCategory, allSongs]);
 
   // State for swipe handling
   const [touchStartX, setTouchStartX] = useState(null);
@@ -137,7 +140,7 @@ export const List = () => {
           onChange={(e) => setFilter(e.target.value)}
         />
         <CategoryScroll
-          options={category}
+          options={author}
           onChange={(e) => setSelectedCategory(e.target.value)}
         />
       </div>
@@ -187,10 +190,10 @@ export const List = () => {
           <DeletePopupIcon />
           <p>Are you sure you want to delete {showConfirm}?</p>
           <div className="button-group">
-            <button className="bg-charcoal" onClick={() => confirmDelete(showConfirm)}>
+            <button className="small bg-charcoal" onClick={() => confirmDelete(showConfirm)}>
               Yes
             </button>
-            <button className="bg-terracotta" onClick={cancelDelete}>
+            <button className="small bg-terracotta" onClick={cancelDelete}>
               No
             </button>
           </div>

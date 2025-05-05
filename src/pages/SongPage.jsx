@@ -139,11 +139,10 @@ export const SongPage = () => {
                                                     editingChord.chordIndex === chordIndex;
 
                                                 return isEditing ? (
-                                                    <span key={chordIndex}>
+                                                    <span key={chordIndex} className="flying">
                                                         <Input
                                                             value={chordValue}
                                                             onChange={handleChordChange}
-                                                            style={{ width: "80px", marginRight: "5px" }}
                                                         />
                                                         <Button onClick={handleSaveChord}>Submit</Button>
                                                     </span>

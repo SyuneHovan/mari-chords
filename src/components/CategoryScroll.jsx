@@ -15,7 +15,7 @@ const CategoryScroll = ({ options, onChange }) => {
                     <button
                         key={option.value}
                         onClick={() => handleCategoryClick(option.value)}
-                        className={`catScrollButton flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+                        className={`small flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                             selectedCategory === option.value && 'active'
                         }`}
                     >
