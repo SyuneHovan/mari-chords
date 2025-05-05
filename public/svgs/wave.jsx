@@ -1,7 +1,7 @@
 import { Col } from "antd";
 import Link from "antd/es/typography/Link";
 
-const WaveIcon = ({className, pos, onClick, icon, style}) => {
+const WaveIcon = ({className, pos, onClick, icon, style=""}) => {
   return (
     <div  className={`waveCont ${pos}`} onClick={onClick} style={style}>
       <svg xmlns="http://www.w3.org/2000/svg" className={`wave ${pos}`} viewBox="0 0 566 373" fill="none">
