@@ -1,0 +1,16 @@
+{
+    "headers": [
+      {
+        "source": "/songs.json",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0" }
+        ]
+      },
+      {
+        "source": "/api/songs",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-store, max-age=0" }
+        ]
+      }
+    ]
+  }
