@@ -50,6 +50,36 @@ export const SongPage = () => {
         setChordValue(e.target.value);
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+            setEditingChord(null);
+            setChordValue("");
+        }
+    };
+
+    // Handle outside clicks to close the chord input
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            // Check if the click is outside the input, submit button, or chord elements
+            if (
+                !event.target.closest(".flying input") &&
+                !event.target.closest(".flying .small") &&
+                !event.target.closest(".chord span")
+            ) {
+                setEditingChord(null);
+                setChordValue("");
+            }
+        };
+
+        if (editingChord) {
+            document.addEventListener("click", handleOutsideClick);
+        }
+
+        return () => {
+            document.removeEventListener("click", handleOutsideClick);
+        };
+    }, [editingChord]);
+
     // Save the updated song
     const handleSaveChord = async () => {
         if (!editingChord || !chordValue.trim()) return;
@@ -143,6 +173,7 @@ export const SongPage = () => {
                                                         <Input
                                                             value={chordValue}
                                                             onChange={handleChordChange}
+                                                            onKeyDown={handleKeyDown}
                                                         />
                                                         <Button className="small" onClick={handleSaveChord}>✓</Button>
                                                     </span>

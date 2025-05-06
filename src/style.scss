@@ -414,7 +414,11 @@ select:focus {
 .list {
   padding: 0 30px 170px;
   max-height: calc(100vh - 260px);
-  overflow-y: auto
+  overflow-y: auto;
+
+  ul a {
+    width: 100%;
+  }
 }
 
 .chord {
@@ -849,10 +853,15 @@ button.small:hover {
   --sage: #64826A
 }
 
+// Desktop adaptation
 @media (width > 480px) {
   .list ul {
       display: flex;
       flex-wrap: wrap;
+
+      a {
+        width: inherit;
+      }
 
       li {
           width: max-content

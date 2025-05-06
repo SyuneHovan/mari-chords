@@ -148,19 +148,19 @@ export const List = () => {
         <Col>
           <ul>
             {filteredSongs.map((song) => (
-              <li
-                key={song.name}
-                style={{
-                  transform: `translateX(${swipeOffset[song.name] || 0}px)`,
-                  transition: touchMoveX ? "none" : "transform 0.3s ease-out",
-                }}
-                onTouchStart={(e) => handleTouchStart(e, song.name)}
-                onTouchMove={(e) => handleTouchMove(e, song.name)}
-                onTouchEnd={(e) => handleTouchEnd(e, song.name)}
-                onTouchCancel={(e) => handleTouchEnd(e, song.name)}
-              >
-                <Link to={`/song/${song.name}`}>
-                  <Row className="song" justify={"space-between"}>
+              <Link to={`/song/${song.name}`}>
+                <li
+                  key={song.name}
+                  style={{
+                    transform: `translateX(${swipeOffset[song.name] || 0}px)`,
+                    transition: touchMoveX ? "none" : "transform 0.3s ease-out",
+                  }}
+                  onTouchStart={(e) => handleTouchStart(e, song.name)}
+                  onTouchMove={(e) => handleTouchMove(e, song.name)}
+                  onTouchEnd={(e) => handleTouchEnd(e, song.name)}
+                  onTouchCancel={(e) => handleTouchEnd(e, song.name)}
+                >
+                  <Row className="song" justify={"start"}>
                     <Col>
                       <SongIcon className="song-list-icon" />
                     </Col>
@@ -171,8 +171,8 @@ export const List = () => {
                       <Paragraph className="songInfo">{song.author}</Paragraph>
                     </Col>
                   </Row>
-                </Link>
-              </li>
+                </li>
+              </Link>
             ))}
           </ul>
         </Col>
