@@ -27,6 +27,7 @@ export const List = () => {
   
 
   useEffect(() => {
+    console.log("songs",songs)
     const songsData = songs
     setAllSongs(songsData); // ← store full list
     setFilteredSongs(songsData); // ← initially show all
