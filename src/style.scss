@@ -1432,6 +1432,11 @@ select:focus {
   z-index: 1
 }
 
+.waveDiv {
+  width: 60%;
+  max-width: 220px;
+}
+
 .waveCont * {
   z-index: 3000
 }

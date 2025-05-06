@@ -10,7 +10,7 @@ const WaveIcon = ({
 }) => {
   return (
     <div  className={`waveCont ${pos} ${waveClassName}`}>
-      <div onClick={onClick}>
+      <div onClick={onClick} className="waveDiv">
         <svg xmlns="http://www.w3.org/2000/svg" className={`wave ${pos}`} viewBox="0 0 566 373" fill="none">
           <path d="M0 0.999996C73.6667 -1 213 6.49998 338 135C421 218 473 306.5 568 372.5H0V0.999996Z" fill="#242424"></path>
         </svg>
