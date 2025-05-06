@@ -67,14 +67,23 @@ export default async function handler(req, res) {
             sha = fileData.sha;
         }
 
-        // Append new song
-        songs.push(song);
+        // Find and update existing song or append if not found
+        const songIndex = songs.findIndex(
+            (s) => s.name === song.name && s.author === song.author
+        );
+        if (songIndex !== -1) {
+            songs[songIndex] = { ...songs[songIndex], ...song };
+            console.log("Updated existing song at index:", songIndex);
+        } else {
+            songs.push(song);
+            console.log("No matching song found; added new song");
+        }
         console.log("Updated songs array:", songs);
 
         // Prepare updated content
         const updatedContent = JSON.stringify(songs, null, 2);
         const commitData = {
-            message: `Add song: ${song.name}`,
+            message: `Update song: ${song.name}`,
             content: Buffer.from(updatedContent).toString("base64"),
             branch: BRANCH
         };
@@ -106,9 +115,9 @@ export default async function handler(req, res) {
         // Verify commit SHA
         console.log("Committed SHA:", commitResponse.commit.sha);
 
-        return res.status(200).json({ message: "Song added successfully!" });
+        return res.status(200).json({ message: "Song updated successfully!" });
     } catch (error) {
         console.error("Error during GitHub API request:", error.message);
-        return res.status(500).json({ error: "An error occurred while adding the song" });
+        return res.status(500).json({ error: "An error occurred while updating the song" });
     }
 }
