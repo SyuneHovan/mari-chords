@@ -21,6 +21,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "Song data is incomplete" });
     }
 
+    // try ${process.env.NEXT_PUBLIC_BASE_URL} instead of "https://api.github.com/repos/${GITHUB_REPO}/contents/public/"
     const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/public/data/songs.json?cachebust=${Date.now()}&ref=${BRANCH}`;
 
     try {
