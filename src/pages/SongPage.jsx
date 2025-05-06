@@ -14,6 +14,8 @@ import BackIcon from "../../public/svgs/back";
 import BgWaveIcon from "../../public/svgs/bgWave";
 import PlayIcon from "../../public/svgs/play";
 import PauseIcon from "../../public/svgs/pause";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const SongPage = () => {
     const { songName } = useParams();
@@ -25,6 +27,7 @@ export const SongPage = () => {
     const navigate = useNavigate();
 
     const handleNavigate = () => {
+        console.log("Navigating back");
         navigate(-1);
     };
 
@@ -60,7 +63,6 @@ export const SongPage = () => {
     // Handle outside clicks to close the chord input
     useEffect(() => {
         const handleOutsideClick = (event) => {
-            // Check if the click is outside the input, submit button, or chord elements
             if (
                 !event.target.closest(".flying input") &&
                 !event.target.closest(".flying .small") &&
@@ -82,7 +84,21 @@ export const SongPage = () => {
 
     // Save the updated song
     const handleSaveChord = async () => {
-        if (!editingChord || !chordValue.trim()) return;
+        if (!editingChord) {
+            toast.error("No chord selected for editing!", {
+                position: "top-center",
+                autoClose: 3000,
+            });
+            return;
+        }
+
+        if (!chordValue.trim()) {
+            toast.error("Chord value cannot be empty!", {
+                position: "top-center",
+                autoClose: 3000,
+            });
+            return;
+        }
 
         // Create a deep copy of the song's lyrics
         const updatedLyrics = song.lyrics.map((line, lIndex) => 
@@ -108,37 +124,57 @@ export const SongPage = () => {
         const SERVER_URL = window.location.origin;
 
         try {
-            // Update the song in the GitHub repository
-            await fetch(`${SERVER_URL}/api/save`, {
+            console.log("Saving chord, sending request to:", `${SERVER_URL}/api/save`);
+            console.log("Request payload:", JSON.stringify({ song: updatedSong }));
+
+            const response = await fetch(`${SERVER_URL}/api/save`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ song: updatedSong })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    console.error("Failed to save the song", response);
-                    throw new Error("Failed to save the song");
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Success saving the song:", data.message);
-                // Update local songs data (this assumes songs.json is reloaded or managed elsewhere)
-                songs[songs.findIndex(s => s.name === songName)] = updatedSong;
-                setEditingChord(null); // Exit editing mode
-                setChordValue("");
-            })
-            .catch(error => {
-                console.log("Error saving the song:", error);
             });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error("Server error response:", errorData);
+                throw new Error(errorData.error || `Failed to save chord (HTTP ${response.status})`);
+            }
+
+            const data = await response.json();
+            console.log("Success saving chord:", data.message);
+            toast.success("Chord saved successfully!", {
+                position: "top-center",
+                autoClose: 2000,
+            });
+
+            // Update local songs data
+            songs[songs.findIndex(s => s.name === songName)] = updatedSong;
+            setEditingChord(null);
+            setChordValue("");
         } catch (error) {
-            console.error("Error saving the song:", error);
+            console.error("Error saving chord:", error.message);
+            toast.error(`Error saving chord: ${error.message}`, {
+                position: "top-center",
+                autoClose: 3000,
+            });
         }
     };
 
     return song ? (
         <div>
             <Header />
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                className="mobile-toast"
+            />
             <WaveIcon className="waveButton" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
             <div className="song-page-container">
                 <div className="song-page-header">
