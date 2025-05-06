@@ -10,7 +10,8 @@
         "antd": "^5.24.6",
         "react": "^18.0.0",
         "react-dom": "^18.0.0",
-        "react-router-dom": "^6.0.0"
+        "react-router-dom": "^6.0.0",
+        "react-toastify": "^11.0.5"
     },
     "devDependencies": {
         "@vitejs/plugin-react": "^4.3.4",
