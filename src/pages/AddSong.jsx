@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import NextDownIcon from "../../public/svgs/nextDown";
 import DoneIcon from "../../public/svgs/done";
-import { Col, Row } from "antd";
+import { Button, Col, Modal, Row } from "antd";
 
 export const AddSong = () => {
     const [lyrics, setLyrics] = useState("");
@@ -15,6 +15,10 @@ export const AddSong = () => {
     const [name, setName] = useState("");
     const [author, setAuthor] = useState("");
     const [activeWord, setActiveWord] = useState(null);
+    
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [jsonInput, setJsonInput] = useState("");
+    
     const navigate = useNavigate();
     
     const handleNavigate = () => {
@@ -72,8 +76,12 @@ export const AddSong = () => {
     return (
       <>
         <Header/>
+
         <WaveIcon className="waveButton" waveClassName="toTop" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
         <div className="add-song">
+          <Button type="primary" onClick={() => setIsModalVisible(true)} style={{ margin: "1rem" }}>
+            Add as Code
+          </Button>
           <h1>լրացրու երգի բառերը, յետոյ նշանակիր ակորդներ</h1>
     
           {/* Metadata Inputs */}
@@ -162,6 +170,72 @@ export const AddSong = () => {
             </>
           )}
         </div>
+
+        <Modal
+          title="Add Songs via JSON"
+          open={isModalVisible}
+          onCancel={() => setIsModalVisible(false)}
+          onOk={async () => {
+            try {
+              let input = jsonInput.trim();
+              if (!input) throw new Error("Empty input");
+
+              let songs;
+              try {
+                // Attempt to parse the input as JSON
+                songs = JSON.parse(input);
+              } catch (parseError) {
+                // If parsing fails, try wrapping as an array (for single object or comma-separated objects)
+                if (!input.startsWith("[") && !input.endsWith("]")) {
+                  input = `[${input}]`;
+                  songs = JSON.parse(input);
+                } else {
+                  throw parseError; // Re-throw if input was supposed to be an array but still failed
+                }
+              }
+
+              // Ensure songs is an array
+              if (!Array.isArray(songs)) {
+                songs = [songs]; // Wrap single object in an array
+              }
+
+              // Validate that songs array is not empty
+              if (songs.length === 0) throw new Error("No valid songs found");
+
+              // Process each song
+              for (const song of songs) {
+                // Optional: Validate song object structure
+                if (!song.name || !song.author || !song.category || !Array.isArray(song.lyrics)) {
+                  throw new Error("Invalid song object structure");
+                }
+
+                const response = await fetch(`${window.location.origin}/api/save`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ song }) // Send each song individually
+                });
+
+                if (!response.ok) {
+                  throw new Error(`Failed to save song: ${song.name}`);
+                }
+              }
+
+              console.log("Songs added successfully");
+              setIsModalVisible(false);
+              setJsonInput("");
+              navigate("/");
+            } catch (error) {
+              console.error("Invalid JSON or error saving song:", error);
+            }
+          }}
+        >
+          <TextArea
+            rows={10}
+            value={jsonInput}
+            onChange={(e) => setJsonInput(e.target.value)}
+            placeholder={`Paste your song JSON here...\nCan be:\n{...}\n{...}, {...}\n[{...}, {...}]`}
+          />
+        </Modal>
       </>
     );
   };
