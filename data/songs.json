@@ -3603,5 +3603,20 @@
         }
       ]
     ]
+  },
+  {
+    "name": "abc",
+    "author": "abc",
+    "category": "",
+    "lyrics": [
+      [
+        {
+          "word": "abc",
+          "chords": [
+            "abc"
+          ]
+        }
+      ]
+    ]
   }
 ]
