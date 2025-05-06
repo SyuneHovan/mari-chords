@@ -946,6 +946,10 @@ button.small:hover {
   background-color: var(--terracotta) !important;
 }
 
+button.Toastify__close-button.Toastify__close-button--colored {
+  display: none;
+}
+
 :root {
   --sienna: #8C5B3B;
   --charcoal: #242424;
