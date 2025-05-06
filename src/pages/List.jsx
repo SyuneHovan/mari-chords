@@ -136,7 +136,7 @@ export const List = () => {
       <HomeWaveIcon className={"home-bg-wave"} />
       <div className="list-filter">
         <Input
-          placeholder="Search by name..."
+          placeholder="Փնտրել ըստ անունի..."
           onChange={(e) => setFilter(e.target.value)}
         />
         <CategoryScroll
@@ -186,18 +186,21 @@ export const List = () => {
       />
 
       {showConfirm && (
-        <div className="popup">
-          <DeletePopupIcon />
-          <p>Are you sure you want to delete {showConfirm}?</p>
-          <div className="button-group">
-            <button className="small bg-charcoal" onClick={() => confirmDelete(showConfirm)}>
-              Yes
-            </button>
-            <button className="small bg-terracotta" onClick={cancelDelete}>
-              No
-            </button>
+        <>
+          <div className="popup-back"></div>
+          <div className="popup">
+            <DeletePopupIcon />
+            <p>Հաստա՞տ ուզում ես ջնջել <span className="tc-terracotta">{showConfirm}</span> երգը</p>
+            <div className="button-group">
+              <button className="small" onClick={() => confirmDelete(showConfirm)}>
+                Այո
+              </button>
+              <button className="small bg-terracotta" onClick={cancelDelete}>
+                Ոչ
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

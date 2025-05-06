@@ -144,7 +144,7 @@ export const SongPage = () => {
                                                             value={chordValue}
                                                             onChange={handleChordChange}
                                                         />
-                                                        <Button onClick={handleSaveChord}>Submit</Button>
+                                                        <Button className="small" onClick={handleSaveChord}>✓</Button>
                                                     </span>
                                                 ) : (
                                                     <span
