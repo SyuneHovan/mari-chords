@@ -10,6 +10,7 @@ import SongIcon from "../../public/svgs/song";
 import Paragraph from "antd/es/typography/Paragraph";
 import CategoryScroll from "../components/CategoryScroll";
 import HomeWaveIcon from "../../public/svgs/homeWave";
+import songs from "../../public/data/songs.json";
 import DeletePopupIcon from "../../public/svgs/deletePopup";
 
 export const List = () => {
@@ -23,31 +24,19 @@ export const List = () => {
   const handleNavigate = () => {
     navigate("/AddSong");
   };
-
-  // Fetch songs from the GitHub-hosted songs.json
-  const fetchSongs = async () => {
-    try {
-      const response = await fetch("/data/songs.json");
-      if (!response.ok) {
-        throw new Error("Failed to fetch songs");
-      }
-      const songsData = await response.json();
-      setAllSongs(songsData); // ← store full list
-      setFilteredSongs(songsData); // ← initially show all
-      setAuthor([
-        { value: "", label: "All" },
-        ...[...new Set(songsData.map((song) => song.author))].map((author) => ({
-          value: author,
-          label: author,
-        })),
-      ]);
-    } catch (error) {
-      console.error("Error fetching songs:", error);
-    }
-  };
+  
 
   useEffect(() => {
-    fetchSongs();
+    const songsData = songs
+    setAllSongs(songsData); // ← store full list
+    setFilteredSongs(songsData); // ← initially show all
+    setAuthor([
+      { value: "", label: "All" },
+      ...[...new Set(songsData.map((song) => song.author))].map((author) => ({
+        value: author,
+        label: author,
+      })),
+    ]);
   }, []);
 
   // Fix filter logic: always filter from allSongs
