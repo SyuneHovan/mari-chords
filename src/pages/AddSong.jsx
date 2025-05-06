@@ -74,7 +74,7 @@ export const AddSong = () => {
         <Header/>
         <WaveIcon className="waveButton" waveClassName="toTop" pos="top left" onClick={handleNavigate} icon={<BackIcon/>}/>
         <div className="add-song">
-          <h1>լցրու երգի բառերը, յետոյ նշանակիր ակորդներ</h1>
+          <h1>լրացրու երգի բառերը, յետոյ նշանակիր ակորդներ</h1>
     
           {/* Metadata Inputs */}
           <div >
@@ -109,7 +109,7 @@ export const AddSong = () => {
             <TextArea
               value={lyrics}
               onChange={e => setLyrics(e.target.value)}
-              placeholder="լցրու երգի բառերը..."
+              placeholder="լրացրու երգի բառերը..."
               rows={6}
             />
             <button onClick={handleLyricsSubmit} style={{ display: "block" }}>
