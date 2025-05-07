@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Song } from "./pages/Song";
 import 'antd/dist/reset.css';
 import { List } from "./pages/List";
@@ -12,6 +12,7 @@ function App() {
                 <Route path="/" element={<List />} />
                 <Route path="/song/:id" element={<Song />} />
                 <Route path="/AddSong" element={<AddSong />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </Router>
     );
