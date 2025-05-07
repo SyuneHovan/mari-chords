@@ -16,13 +16,11 @@ export default async function handler(req, res) {
   try {
     const sql = neon(process.env.POSTGRES_URL);
 
-    // Delete song by id or name
-    const query = id
-      ? 'DELETE FROM songs WHERE id = $1 RETURNING *'
-      : 'DELETE FROM songs WHERE name = $1 RETURNING *';
+    // Delete song by id
+    const query = 'DELETE FROM songs WHERE id = $1 RETURNING *';
     const params = [id];
 
-    const result = await sql(query, params);
+    const result = await sql.query(query, params);
 
     if (result.length === 0) {
       console.error('Song not found:', { id });
