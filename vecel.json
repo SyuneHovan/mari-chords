@@ -1,6 +1,18 @@
 {
     "rewrites": [
       {
+        "source": "/api/(.*)",
+        "destination": "/api/$1"
+      },
+      {
+        "source": "/assets/(.*)",
+        "destination": "/assets/$1"
+      },
+      {
+        "source": "/svgs/(.*)",
+        "destination": "/svgs/$1"
+      },
+      {
         "source": "/(.*)",
         "destination": "/index.html"
       }
