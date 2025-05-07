@@ -1754,7 +1754,15 @@ button.small,button.small:hover {
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--error {
-  background-color: var(--terracotta)!important
+  background-color: var(--error)!important
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: var(--sage)!important
+}
+
+.Toastify__close-button {
+  display: none !important;
 }
 
 :root {
@@ -1762,7 +1770,9 @@ button.small,button.small:hover {
   --charcoal: #242424;
   --terracotta: #B46E4C;
   --cream: #FEF1DE;
-  --sage: #64826A
+  --sage: #64826A;
+  --success: #6dd482;
+  --error: #c93737;
 }
 
 @media (width > 480px) {
