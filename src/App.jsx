@@ -12,7 +12,6 @@ function App() {
                 <Route path="/" element={<List />} />
                 <Route path="/song/:id" element={<Song />} />
                 <Route path="/AddSong" element={<AddSong />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </Router>
     );
