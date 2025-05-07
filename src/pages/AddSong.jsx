@@ -94,29 +94,33 @@ export const AddSong = () => {
       });
       return;
     }
-
-    const song = {
+  
+    const songData = {
       name,
       author,
       category: category || "uncategorized", // Default category if empty
-      lyrics: parsedLines
+      lyrics: parsedLines,
     };
-
+  
+    console.log("Sending payload to /api/save:", JSON.stringify(songData, null, 2));
+  
     const SERVER_URL = window.location.origin;
-    
+  
     try {
       const response = await fetch(`${SERVER_URL}/api/save`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ song })
+        body: JSON.stringify(songData), // Send song data directly
       });
-
+  
       if (!response.ok) {
-        throw new Error("Failed to save the song");
+        const errorData = await response.json();
+        console.error("Save error response:", errorData);
+        throw new Error(errorData.error || "Failed to save the song");
       }
-
+  
       const data = await response.json();
-      toast.success("Song saved successfully!", {
+      toast.success(data.message, {
         position: "top-center",
         autoClose: 2000,
       });
@@ -125,6 +129,7 @@ export const AddSong = () => {
       setParsedLines([]);
       navigate("/");
     } catch (error) {
+      console.error("Error saving song:", error);
       toast.error("Error saving song: " + error.message, {
         position: "top-center",
         autoClose: 3000,

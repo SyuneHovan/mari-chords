@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input } from "../components/Input";
 import { Select } from "../components/Select";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AddIcon from "../../public/svgs/add";
 import { Col, Row } from "antd";
 import { Header } from "./Header";
@@ -10,11 +11,13 @@ import SongIcon from "../../public/svgs/song";
 import Paragraph from "antd/es/typography/Paragraph";
 import CategoryScroll from "../components/CategoryScroll";
 import HomeWaveIcon from "../../public/svgs/homeWave";
-import songs from "../../public/data/songs.json";
 import DeletePopupIcon from "../../public/svgs/deletePopup";
+import LoaderIcon from "../../public/svgs/loader";
+import { Loader } from "../components/Loader";
 
 export const List = () => {
   const [filter, setFilter] = useState("");
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [author, setAuthor] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
@@ -24,23 +27,38 @@ export const List = () => {
   const handleNavigate = () => {
     navigate("/AddSong");
   };
-  
+
+  const fetchSongs = async () => {
+    try {
+      const response = await fetch("/api/songs");
+      if (!response.ok) {
+        throw new Error("Failed to fetch songs");
+      }
+      const songsData = await response.json();
+      setAllSongs(songsData);
+      setFilteredSongs(songsData);
+      setAuthor([
+        { value: "", label: "All" },
+        ...[...new Set(songsData.map((song) => song.author))].map((author) => ({
+          value: author,
+          label: author,
+        })),
+      ]);
+    } catch (error) {
+      console.error("Error fetching songs:", error);
+      toast.error("Error fetching songs: " + error.message, {
+        position: "top-center",
+        autoClose: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    console.log("songs",songs)
-    const songsData = songs
-    setAllSongs(songsData); // ← store full list
-    setFilteredSongs(songsData); // ← initially show all
-    setAuthor([
-      { value: "", label: "All" },
-      ...[...new Set(songsData.map((song) => song.author))].map((author) => ({
-        value: author,
-        label: author,
-      })),
-    ]);
+    fetchSongs();
   }, []);
 
-  // Fix filter logic: always filter from allSongs
   useEffect(() => {
     const filtered = allSongs.filter(
       (song) =>
@@ -56,73 +74,83 @@ export const List = () => {
   const [swipeOffset, setSwipeOffset] = useState({});
   const [showConfirm, setShowConfirm] = useState(null);
 
-  const handleTouchStart = (e, songName) => {
+  const handleTouchStart = (e, id) => {
     setTouchStartX(e.touches[0].clientX);
-    setSwipeOffset((prev) => ({ ...prev, [songName]: 0 }));
+    setSwipeOffset((prev) => ({ ...prev, [id]: 0 }));
   };
 
-  const handleTouchMove = (e, songName) => {
+  const handleTouchMove = (e, id) => {
     if (touchStartX !== null) {
       const currentX = e.touches[0].clientX;
       const deltaX = currentX - touchStartX;
-      // Only allow rightward movement
       if (deltaX > 0) {
         setTouchMoveX(currentX);
         setSwipeOffset((prev) => ({
           ...prev,
-          [songName]: Math.min(deltaX, 100),
+          [id]: Math.min(deltaX, 100),
         }));
       }
     }
   };
 
-  const handleTouchEnd = (e, songName) => {
-    const offset = swipeOffset[songName] || 0;
+  const handleTouchEnd = (e, id) => {
+    const offset = swipeOffset[id] || 0;
     if (offset >= 100) {
-      setShowConfirm(songName);
+      setShowConfirm(id);
     } else {
-      setSwipeOffset((prev) => ({ ...prev, [songName]: 0 }));
+      setSwipeOffset((prev) => ({ ...prev, [id]: 0 }));
     }
     setTouchStartX(null);
     setTouchMoveX(null);
   };
 
-  const confirmDelete = async (songName) => {
+  const confirmDelete = async (song) => {
+    const { id } = song;
+
     try {
       const SERVER_URL = window.location.origin;
       const response = await fetch(`${SERVER_URL}/api/delete`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ songName }),
+        body: JSON.stringify({ id }),
       });
 
       if (!response.ok) {
-        console.error("Failed to delete the song", response);
-        throw new Error("Failed to delete the song");
+        const errorData = await response.json();
+        console.error("Failed to delete the song", response.status, errorData);
+        throw new Error(errorData.error || "Failed to delete the song");
       }
 
       const data = await response.json();
       console.log("Success deleting the song:", data.message);
+      toast.success(data.message, {
+        position: "top-center",
+        autoClose: 2000,
+      });
 
-      // Refetch songs to update the UI
       await fetchSongs();
     } catch (error) {
       console.error("Error deleting the song:", error);
+      toast.error("Error deleting song: " + error.message, {
+        position: "top-center",
+        autoClose: 3000,
+      });
     } finally {
       setShowConfirm(null);
-      setSwipeOffset((prev) => ({ ...prev, [songName]: 0 }));
+      setSwipeOffset((prev) => ({ ...prev, [id]: 0 }));
     }
   };
 
   const cancelDelete = () => {
     setShowConfirm(null);
-    Object.keys(swipeOffset).forEach((songName) =>
-      setSwipeOffset((prev) => ({ ...prev, [songName]: 0 }))
+    Object.keys(swipeOffset).forEach((id) =>
+      setSwipeOffset((prev) => ({ ...prev, [id]: 0 }))
     );
   };
 
   return (
     <>
+      {loading && <Loader/>}
       <HomeWaveIcon className={"home-bg-wave"} />
       <div className="list-filter">
         <Input
@@ -134,36 +162,38 @@ export const List = () => {
           onChange={(e) => setSelectedCategory(e.target.value)}
         />
       </div>
+
       <Row className="list" justify={"space-between"}>
         <Col>
           <ul>
-            {filteredSongs.map((song) => (
-              <Link to={`/song/${song.name}`}>
-                <li
-                  key={song.name}
-                  style={{
-                    transform: `translateX(${swipeOffset[song.name] || 0}px)`,
-                    transition: touchMoveX ? "none" : "transform 0.3s ease-out",
-                  }}
-                  onTouchStart={(e) => handleTouchStart(e, song.name)}
-                  onTouchMove={(e) => handleTouchMove(e, song.name)}
-                  onTouchEnd={(e) => handleTouchEnd(e, song.name)}
-                  onTouchCancel={(e) => handleTouchEnd(e, song.name)}
-                >
-                  <Row className="song" justify={"start"}>
-                    <Col>
-                      <SongIcon className="song-list-icon" />
-                    </Col>
-                    <Col className="songInfoBox">
-                      <Paragraph className="songInfo songTitle">
-                        {song.name}
-                      </Paragraph>
-                      <Paragraph className="songInfo">{song.author}</Paragraph>
-                    </Col>
-                  </Row>
-                </li>
-              </Link>
-            ))}
+            {!loading && 
+              filteredSongs.map((song) => (
+                <Link to={`/song/${song.id}`} key={song.id}>
+                  <li
+                    style={{
+                      transform: `translateX(${swipeOffset[song.name] || 0}px)`,
+                      transition: touchMoveX ? "none" : "transform 0.3s ease-out",
+                    }}
+                    onTouchStart={(e) => handleTouchStart(e, song.name)}
+                    onTouchMove={(e) => handleTouchMove(e, song.name)}
+                    onTouchEnd={(e) => handleTouchEnd(e, song.name)}
+                    onTouchCancel={(e) => handleTouchEnd(e, song.name)}
+                  >
+                    <Row className="song" justify={"start"}>
+                      <Col>
+                        <SongIcon className="song-list-icon" />
+                      </Col>
+                      <Col className="songInfoBox">
+                        <Paragraph className="songInfo songTitle">
+                          {song.name}
+                        </Paragraph>
+                        <Paragraph className="songInfo">{song.author}</Paragraph>
+                      </Col>
+                    </Row>
+                  </li>
+                </Link>
+              ))
+            }
           </ul>
         </Col>
       </Row>
@@ -180,9 +210,17 @@ export const List = () => {
           <div className="popup-back"></div>
           <div className="popup">
             <DeletePopupIcon />
-            <p>Հաստա՞տ ուզում ես ջնջել <span className="tc-terracotta">{showConfirm}</span> երգը</p>
+            <p>
+              Հաստա՞տ ուզում ես ջնջել <span className="tc-terracotta">{showConfirm}</span> երգը
+            </p>
             <div className="button-group">
-              <button className="small" onClick={() => confirmDelete(showConfirm)}>
+              <button
+                className="small"
+                onClick={() => {
+                  const song = allSongs.find((s) => s.name === showConfirm);
+                  if (song) confirmDelete(song);
+                }}
+              >
                 Այո
               </button>
               <button className="small bg-terracotta" onClick={cancelDelete}>
