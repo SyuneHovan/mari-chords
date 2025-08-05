@@ -1,24 +1,37 @@
 {
-    "name": "chord-viewer",
-    "version": "1.0.0",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview"
-    },
-    "dependencies": {
-        "@neondatabase/serverless": "^1.0.0",
-        "antd": "^5.24.6",
-        "dotenv": "^16.5.0",
-        "pg": "^8.15.6",
-        "react": "^18.0.0",
-        "react-dom": "^18.0.0",
-        "react-router-dom": "^6.0.0",
-        "react-toastify": "^11.0.5"
-    },
-    "devDependencies": {
-        "@vitejs/plugin-react": "^4.3.4",
-        "sass": "^1.86.2",
-        "vite": "^4.5.14"
-    }
+  "name": "chord-viewer",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/native-stack": "^6.11.0",
+    "antd": "^5.24.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "expo": "^53.0.20",
+    "pg": "^8.15.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "react-native": "0.79.5",
+    "react-native-gesture-handler": "~2.24.0",
+    "react-native-paper": "^5.14.5",
+    "react-native-safe-area-context": "5.4.0",
+    "react-native-screens": "~4.11.1",
+    "react-native-svg": "15.11.2",
+    "react-native-toast-message": "^2.3.3",
+    "react-native-web": "^0.20.0",
+    "react-router-dom": "^6.0.0",
+    "react-toastify": "^11.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "sass": "^1.86.2",
+    "vite": "^4.5.14",
+    "vite-plugin-react-native-web": "^2.2.1"
+  }
 }

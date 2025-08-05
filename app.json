@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "ee8be558-d3eb-4b04-aa1e-510d869866e9"
+      }
+    },
+    "android": {
+      "package": "com.syune.hovhannsiayn.nvag"
+    },
+    "owner": "syune.hovhannisyan",
+    "slug": "nvag"
+  }
+}

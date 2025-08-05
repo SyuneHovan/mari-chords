@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 
 const AddSongsModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -64,7 +65,7 @@ const AddSongsModal = () => {
           throw new Error('Invalid song object structure');
         }
 
-        const response = await fetch(`${window.location.origin}/api/save`, {
+        const response = await fetch(`${API_URL}/api/save`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ song }), // Send each song individually

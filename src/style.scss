@@ -1071,14 +1071,7 @@ mark {
 
 @font-face {
   font-family: Nasa;
-  src: url(/assets/nasa-32004372.ttf) format("truetype");
-  font-weight: 400;
-  font-style: normal
-}
-
-@font-face {
-  font-family: Montserrat-Regular;
-  src: url(/assets/montserrat-regular-a68806f7.otf) format("opentype");
+  src: url(/assets/fonts/nasa-32004372.ttf) format("truetype");
   font-weight: 400;
   font-style: normal
 }
@@ -1090,12 +1083,12 @@ html {
 body {
   background-color: var(--sage);
   color: var(--crimson);
-  font-family: Montserrat-Regular,sans-serif!important;
+  font-family: sans-serif!important;
   line-height: 1.6
 }
 
 body * {
-  font-family: Montserrat-Regular,sans-serif!important
+  font-family: sans-serif!important
 }
 
 #root {

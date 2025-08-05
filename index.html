@@ -3,8 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>Mari Chord Viewer</title>
+
+    <style type="text/css">
+      /* --- FIX 1: This makes the app container fill the screen --- */
+      html,
+      body,
+      #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        /* This is crucial for react-native-web's layout system */
+        display: flex;
+        flex-direction: column;
+      }
+      #root {
+        flex: 1; /* This makes our app take up all the available space */
+      }
+
+      /* --- FIX 2: This loads the missing icon font --- */
+      @font-face {
+        font-family: 'MaterialCommunityIcons';
+        src: url('/node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf')
+          format('truetype');
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
