@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 import { TextInput, Button, Modal, Portal } from 'react-native-paper';
 import { colors } from '../theme';
 import Toast from 'react-native-toast-message';
-import { saveSong, saveSongArray } from '../storage'; // Import both save functions
+import { saveSong, saveSongArray } from '../storage';
+import WaveButton from '../components/WaveButton';
+import BackIcon from '../components/icons/BackIcon';
 
 export default function AddSongScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -11,6 +13,7 @@ export default function AddSongScreen({ navigation }) {
   const [lyrics, setLyrics] = useState('');
   const [parsedLines, setParsedLines] = useState([]);
   const [activeWord, setActiveWord] = useState(null);
+  const [chordValue, setChordValue] = useState('');
 
   // --- State for the JSON Modal ---
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,6 +37,7 @@ export default function AddSongScreen({ navigation }) {
 
   // Updates the chords for a specific word in the editor
   const handleChordChange = (lineIndex, wordIndex, newChords) => {
+    setChordValue(newChords); // Keep the input field's value in sync
     const updatedLines = [...parsedLines];
     updatedLines[lineIndex][wordIndex].chords = newChords.split(/[\s,]+/).filter(c => c);
     setParsedLines(updatedLines);
@@ -85,31 +89,40 @@ export default function AddSongScreen({ navigation }) {
     }
   };
 
+
   return (
-    <>
+    <SafeAreaView style={styles.fullScreen}>
       <Portal>
         <Modal visible={isModalVisible} onDismiss={() => setIsModalVisible(false)} contentContainerStyle={styles.modalContainer}>
           <Text style={styles.modalTitle}>Add Songs via JSON</Text>
           <TextInput
-            style={styles.jsonInput}
-            multiline
+            multiline={true}
             value={jsonInput}
             onChangeText={setJsonInput}
             placeholder="[{ name: 'Song', author: 'Artist', lyrics: [[{word: 'Hello', chords: ['C']}]] }]"
             placeholderTextColor={'rgba(254, 241, 222, 0.5)'}
             textColor={colors.cream}
+            label="Paste JSON code here..."
+            style={[styles.input, styles.lyricsInput, styles.jsonInput]}
+            mode="flat"
+            numberOfLines={8}
             theme={{ colors: { primary: colors.terracotta } }}
-          />
+              />
           <View style={styles.modalActions}>
             <Button textColor={colors.charcoal} onPress={() => setIsModalVisible(false)}>Cancel</Button>
             <Button style={{backgroundColor: colors.terracotta}} labelStyle={{color: colors.cream}} onPress={handleSaveJson}>Save</Button>
           </View>
         </Modal>
       </Portal>
-      
+
+      <WaveButton
+        pos="top left"
+        onPress={() => navigation.goBack()}
+        icon={<BackIcon size={35} color={colors.cream} />}
+      />
+
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.headerRow}>
-          <Text style={styles.header}>Add a New Song</Text>
           <Button
             mode="text"
             onPress={() => setIsModalVisible(true)}
@@ -118,7 +131,7 @@ export default function AddSongScreen({ navigation }) {
             Add as Code {'{}'}
           </Button>
         </View>
-        
+
         {parsedLines.length === 0 ? (
           <>
             <TextInput
@@ -127,8 +140,6 @@ export default function AddSongScreen({ navigation }) {
               onChangeText={setName}
               style={styles.input}
               mode="flat"
-              underlineColor="transparent"
-              activeUnderlineColor="transparent"
               placeholderTextColor={colors.sage}
               textColor={colors.charcoal}
               theme={{ colors: { primary: colors.terracotta } }}
@@ -139,8 +150,6 @@ export default function AddSongScreen({ navigation }) {
               onChangeText={setAuthor}
               style={styles.input}
               mode="flat"
-              underlineColor="transparent"
-              activeUnderlineColor="transparent"
               placeholderTextColor={colors.sage}
               textColor={colors.charcoal}
               theme={{ colors: { primary: colors.terracotta } }}
@@ -153,8 +162,6 @@ export default function AddSongScreen({ navigation }) {
               mode="flat"
               multiline={true}
               numberOfLines={8}
-              underlineColor="transparent"
-              activeUnderlineColor="transparent"
               placeholderTextColor={colors.sage}
               textColor={colors.charcoal}
               theme={{ colors: { primary: colors.terracotta } }}
@@ -184,7 +191,6 @@ export default function AddSongScreen({ navigation }) {
                           style={styles.chordInput}
                           value={chordValue}
                           onChangeText={(text) => handleChordChange(lineIndex, wordIndex, text)}
-                          // autoFocus={true} // <-- THIS LINE IS REMOVED TO PREVENT CRASH
                           onBlur={() => setActiveWord(null)}
                           theme={{ colors: { primary: colors.terracotta } }}
                         />
@@ -205,18 +211,19 @@ export default function AddSongScreen({ navigation }) {
           </View>
         )}
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.sage },
-  contentContainer: { padding: 20, paddingBottom: 60 },
+  fullScreen: { flex: 1, backgroundColor: colors.sage },
+  container: { flex: 1 },
+  contentContainer: { padding: 20, paddingTop: 160, paddingBottom: 60 },
   headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+    right: 20,
+    top: 40,
+    position: 'absolute',
+
   },
   header: {
     fontSize: 24,
@@ -232,10 +239,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 4,
+    borderRadius: 4
   },
   lyricsInput: {
     height: 200,
-    paddingTop: 8,
+    textAlignVertical: 'top',
   },
   button: { backgroundColor: colors.terracotta, paddingVertical: 8 },
   buttonText: { color: colors.cream, fontSize: 16 },

@@ -7,7 +7,7 @@ import WaveButton from '../components/WaveButton';
 import AddIcon from '../components/icons/AddIcon';
 import SongIcon from '../components/icons/SongIcon';
 import Toast from 'react-native-toast-message';
-import BgWaveIcon from '../components/icons/BgWaveIcon';
+import HomeBgWaveIcon from '../components/icons/HomeBgWaveIcon';
 import { getSongs, deleteSong } from '../storage';
 
 // This component renders the "Delete" button when you swipe a song
@@ -30,7 +30,7 @@ export default function SongListScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [allSongs, setAllSongs] = useState([]);
   const [filteredSongs, setFilteredSongs] = useState([]);
-  
+
   // State for filters
   const [searchText, setSearchText] = useState('');
   const [authors, setAuthors] = useState([]);
@@ -45,7 +45,7 @@ export default function SongListScreen({ navigation }) {
     // Extract unique authors (filtering out any null/empty values) and create the filter list
     const uniqueAuthors = ['All', ...new Set(songsData.map(song => song.author).filter(Boolean))];
     setAuthors(uniqueAuthors);
-    
+
     setLoading(false);
   };
 
@@ -62,7 +62,7 @@ export default function SongListScreen({ navigation }) {
         song.name.toLowerCase().includes(searchText.toLowerCase())
       );
     }
-    
+
     setFilteredSongs(filtered);
   }, [searchText, selectedAuthor, allSongs]);
 
@@ -90,20 +90,20 @@ export default function SongListScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.fullScreen}>
-      <BgWaveIcon style={styles.homeBgWave} />
+      <HomeBgWaveIcon style={styles.homeBgWave} />
 
       <View style={styles.filterContainer}>
         <TextInput
-          label="Search songs..."
+          label="Search a song..."
           value={searchText}
           onChangeText={setSearchText}
           style={styles.searchInput}
           mode="flat"
           underlineColor="transparent"
           activeUnderlineColor="transparent"
-          placeholderTextColor={colors.sage}
-          textColor={colors.charcoal}
-          theme={{ colors: { primary: colors.terracotta } }}
+          placeholderTextColor={'rgba(254, 241, 222, 0.7)'}
+          textColor={colors.cream}
+          theme={{ colors: { primary: colors.cream, onSurfaceVariant: colors.cream } }}
         />
       </View>
 
@@ -133,7 +133,7 @@ export default function SongListScreen({ navigation }) {
       <FlatList
         data={filteredSongs}
         keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingTop: 10, paddingBottom: 100 }} // Added paddingBottom so the FAB doesn't cover the last song
+        contentContainerStyle={{ paddingTop: 10, paddingHorizontal: 20, paddingBottom: 100 }} // Added paddingBottom so the FAB doesn't cover the last song
         renderItem={({ item }) => (
           <Swipeable renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, () => handleDelete(item.id))}>
             <List.Item
@@ -153,7 +153,7 @@ export default function SongListScreen({ navigation }) {
       <WaveButton
         pos="bottom left"
         onPress={() => navigation.navigate('Add Song')}
-        icon={<AddIcon size={25} color={colors.cream} />}
+        icon={<AddIcon size={50} color={colors.cream} />}
       />
     </SafeAreaView>
   );
@@ -162,9 +162,15 @@ export default function SongListScreen({ navigation }) {
 const styles = StyleSheet.create({
   fullScreen: { flex: 1, backgroundColor: colors.sage },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  homeBgWave: { position: 'absolute', top: -120, left: 0, right: 0, width: '100%', zIndex: -1 },
-  filterContainer: { paddingHorizontal: 20, paddingTop: 10 },
-  searchInput: { backgroundColor: 'rgba(254, 241, 222, 0.7)', borderRadius: 8, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 4 },
+  homeBgWave: { position: 'absolute', top: -400, left: 0, right: 0, zIndex: 0 },
+  filterContainer: { paddingHorizontal: 20, paddingTop: 40 },
+  searchInput: {
+    marginBottom: 15,
+    backgroundColor: 'transparent', // Use transparent background
+    borderBottomWidth: 2,           // Add a 2px border
+    borderBottomColor: colors.cream, // Use cream color for the border
+    paddingHorizontal: 2, // Add a little horizontal padding
+  },
   categoryContainer: {
     paddingVertical: 10,
     paddingLeft: 20,
@@ -172,19 +178,19 @@ const styles = StyleSheet.create({
   chip: {
     marginRight: 8,
     borderRadius: 16,
+    backgroundColor: colors.cream,
   },
   chipSelected: {
-    backgroundColor: colors.terracotta,
+    opacity: 1
   },
   chipUnselected: {
-    backgroundColor: colors.cream,
     opacity: 0.7,
   },
   chipText: {
     fontWeight: 'bold',
   },
   chipTextSelected: {
-    color: colors.cream,
+    color: colors.sage,
   },
   chipTextUnselected: {
     color: colors.sage,
@@ -200,7 +206,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   deleteButton: {
-    backgroundColor: colors.error,
+    backgroundColor: colors.charcoal,
     justifyContent: 'center',
     alignItems: 'center',
     width: 80,

@@ -5,7 +5,7 @@ import Svg, { G, Path, Circle } from 'react-native-svg';
 const SongViewIcon = (props) => (
   // The main <svg> tag becomes <Svg>
   // width, height, viewBox and fill are passed as props
-  <Svg width={200} height={200} viewBox="-10 0 314 314" fill="none" {...props}>
+  <Svg width={300} height={300} viewBox="-10 0 314 314" fill="none" {...props}>
     <G>
       <Path
         d="M252 10H40C25.6406 10 14 21.6406 14 36V248C14 262.359 25.6406 274 40 274H252C266.359 274 278 262.359 278 248V36C278 21.6406 266.359 10 252 10Z"

@@ -16,6 +16,9 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#1e332c"
+    },
+    "ios": {
+      "bundleIdentifier": "com.syune.hovhannsiayn.nvag"
     }
   }
 }

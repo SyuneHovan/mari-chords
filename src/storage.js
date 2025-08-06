@@ -6,19 +6,22 @@ const SONGS_KEY = '@songs';
 export const getSongs = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem(SONGS_KEY);
-    return jsonValue != null ? JSON.parse(jsonValue) : [];
+    return jsonValue != null ? JSON.parse(jsonValue) : []; // Return songs array or empty array
   } catch (e) {
     console.error("Error reading songs from storage", e);
     return [];
   }
 };
 
-// --- Function to save a single new song ---
+// --- Function to save a new song ---
 export const saveSong = async (newSong) => {
   try {
+    // We give the new song a unique ID based on the current time
     newSong.id = Date.now();
+
     const existingSongs = await getSongs();
-    const updatedSongs = [newSong, ...existingSongs];
+    const updatedSongs = [newSong, ...existingSongs]; // Add the new song to the beginning
+
     const jsonValue = JSON.stringify(updatedSongs);
     await AsyncStorage.setItem(SONGS_KEY, jsonValue);
   } catch (e) {
@@ -31,6 +34,7 @@ export const deleteSong = async (songId) => {
   try {
     const existingSongs = await getSongs();
     const updatedSongs = existingSongs.filter(song => song.id !== songId);
+
     const jsonValue = JSON.stringify(updatedSongs);
     await AsyncStorage.setItem(SONGS_KEY, jsonValue);
   } catch (e) {
@@ -38,15 +42,20 @@ export const deleteSong = async (songId) => {
   }
 };
 
-// --- Function to update an existing song ---
+// --- NEW: Function to update an existing song ---
 export const updateSong = async (songToUpdate) => {
   try {
     const existingSongs = await getSongs();
+    // Find the index of the song we need to update
     const songIndex = existingSongs.findIndex(song => song.id === songToUpdate.id);
+
+    // If the song is found, replace it in the array
     if (songIndex > -1) {
       existingSongs[songIndex] = songToUpdate;
       const jsonValue = JSON.stringify(existingSongs);
       await AsyncStorage.setItem(SONGS_KEY, jsonValue);
+    } else {
+      console.error("Could not find song to update.");
     }
   } catch (e) {
     console.error("Error updating song in storage", e);
