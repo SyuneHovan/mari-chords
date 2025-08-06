@@ -9,6 +9,13 @@
       "package": "com.syune.hovhannsiayn.nvag"
     },
     "owner": "syune.hovhannisyan",
-    "slug": "nvag"
+    "slug": "nvag",
+    "name": "Nvag",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1e332c"
+    }
   }
 }
