@@ -38,8 +38,35 @@ export default function AddSongScreen({ navigation }) {
   };
   
   // We will implement saving in the next step
-  const handleSaveSong = () => {
-    alert('Next step: Save this song to the database!');
+  const handleSaveSong = async () => {
+    // 1. Validate the inputs
+    if (!name.trim()) {
+      Toast.show({ type: 'error', text1: 'Song title is required!' });
+      return;
+    }
+    if (!author.trim()) {
+      Toast.show({ type: 'error', text1: 'Author is required!' });
+      return;
+    }
+    if (parsedLines.length === 0) {
+      Toast.show({ type: 'error', text1: 'Lyrics are required!' });
+      return;
+    }
+
+    // 2. Construct the data payload
+    const songData = {
+      name,
+      author,
+      category: 'uncategorized',
+      lyrics: parsedLines,
+    };
+
+    // 3. Call the storage helper to save the data
+    await saveSong(songData);
+    
+    // 4. Show a success message and navigate back
+    Toast.show({ type: 'success', text1: 'Song saved successfully!' });
+    navigation.goBack();
   };
 
   return (

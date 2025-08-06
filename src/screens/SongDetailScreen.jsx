@@ -26,24 +26,16 @@ export default function SongDetailScreen() {
 
   useEffect(() => {
     if (songId) {
-      const fetchSong = async () => {
+      const loadSongFromStorage = async () => {
         setLoading(true);
-        // Reset state for new song
         setIsScrolling(false);
         scrollPositionRef.current = 0;
-        try {
-          const response = await fetch(`${API_URL}/api/songs/${songId}`);
-          if (!response.ok) throw new Error('Failed to fetch song');
-          const data = await response.json();
-          setSong(data);
-        } catch (error) {
-          console.error("Error fetching song:", error);
-          alert('Error fetching song details.');
-        } finally {
-          setLoading(false);
-        }
+        const allSongs = await getSongs();
+        const currentSong = allSongs.find(s => s.id === songId);
+        setSong(currentSong);
+        setLoading(false);
       };
-      fetchSong();
+      loadSongFromStorage();
     }
   }, [songId]);
 
