@@ -11,14 +11,22 @@ const WaveButton = ({
 	icon,
 	pos = 'bottom right',
 	color = 'charcoal',
-	top = false,
+  onTop = false,
+  top = -10,
+  bottom = -10,
+  left = -10,
+  right = -10,
+  iconTop = 60,
+  iconBottom = 10,
+  iconLeft = 30,
+  iconRight = -20
 }) => {
 	const styles = StyleSheet.create({
 		container: {
 			position: 'absolute',
 			width: '60%',
 			height: 150,
-			zIndex: top ? 50 : 10,
+			zIndex: onTop ? 50 : 10,
 		},
 		iconContainer: {
 			position: 'absolute',
@@ -35,21 +43,20 @@ const WaveButton = ({
 
 	// Set the position (top/bottom, left/right)
 	if (vertical === 'top') {
-		positionStyle.top = -10;
-		iconPositionStyle.top = 65;
+		positionStyle.top = top;
+		iconPositionStyle.top = iconTop;
 	}
 	if (vertical === 'bottom') {
-		positionStyle.bottom = -10;
-		iconPositionStyle.bottom = 10;
+		positionStyle.bottom = bottom;
+		iconPositionStyle.bottom = iconBottom;
 	}
 	if (horizontal === 'left') {
-		positionStyle.left = -10;
-		iconPositionStyle.left = 30;
+		positionStyle.left = left;
+		iconPositionStyle.left = iconLeft;
 	}
 	if (horizontal === 'right') {
-		positionStyle.right = -10;
-		iconPositionStyle.top = 65;
-		iconPositionStyle.right = -20;
+		positionStyle.right = right;
+		iconPositionStyle.right = iconRight;
 	}
 
 	// Set the SVG transform to flip the wave

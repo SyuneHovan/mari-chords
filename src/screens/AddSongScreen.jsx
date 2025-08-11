@@ -6,6 +6,9 @@ import Toast from 'react-native-toast-message';
 import { saveSong, saveSongArray } from '../storage';
 import WaveButton from '../components/WaveButton';
 import BackIcon from '../components/icons/BackIcon';
+import * as DocumentPicker from 'expo-document-picker';
+// Import the Expo FileSystem module to read the file
+import * as FileSystem from 'expo-file-system';
 
 export default function AddSongScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -89,6 +92,49 @@ export default function AddSongScreen({ navigation }) {
     }
   };
 
+  // --- CORRECTED FUNCTION ---
+  // This function now uses the correct Expo APIs to pick and read a file.
+  const handleUploadJsonFile = async () => {
+    try {
+      // Use getDocumentAsync, the correct method for expo-document-picker
+      const result = await DocumentPicker.getDocumentAsync({
+        type: ['application/json', 'text/plain'], // Use MIME types
+        copyToCacheDirectory: true,
+      });
+
+      // The new API returns `canceled` instead of throwing an error
+      if (result.canceled) {
+        console.log('User cancelled file picker');
+        return;
+      }
+
+      // The new API returns file info in an `assets` array
+      if (result.assets && result.assets.length > 0) {
+        const asset = result.assets[0];
+        
+        // Use Expo's FileSystem to read the file content
+        const fileContent = await FileSystem.readAsStringAsync(asset.uri, {
+          encoding: FileSystem.EncodingType.UTF8,
+        });
+        
+        const songs = JSON.parse(fileContent);
+
+        if (!Array.isArray(songs) || songs.length === 0) {
+            Toast.show({ type: 'error', text1: 'JSON file must contain an array of songs.' });
+            return;
+        }
+
+        await saveSongArray(songs);
+        Toast.show({ type: 'success', text1: `${songs.length} songs added successfully!` });
+        navigation.goBack(); // Navigate back on success for consistent UX
+      } else {
+        Toast.show({ type: 'error', text1: 'Could not get the selected file.' });
+      }
+    } catch (err) {
+      console.error("Error picking or parsing file:", err);
+      Toast.show({ type: 'error', text1: 'Failed to load or parse file.' });
+    }
+  };
 
   return (
     <SafeAreaView style={styles.fullScreen}>
@@ -107,7 +153,7 @@ export default function AddSongScreen({ navigation }) {
             mode="flat"
             numberOfLines={8}
             theme={{ colors: { primary: colors.terracotta } }}
-              />
+            />
           <View style={styles.modalActions}>
             <Button textColor={colors.charcoal} onPress={() => setIsModalVisible(false)}>Cancel</Button>
             <Button style={{backgroundColor: colors.terracotta}} labelStyle={{color: colors.cream}} onPress={handleSaveJson}>Save</Button>
@@ -192,6 +238,7 @@ export default function AddSongScreen({ navigation }) {
                           value={chordValue}
                           onChangeText={(text) => handleChordChange(lineIndex, wordIndex, text)}
                           onBlur={() => setActiveWord(null)}
+                          autoFocus={true}
                           theme={{ colors: { primary: colors.terracotta } }}
                         />
                       ) : (
@@ -210,6 +257,15 @@ export default function AddSongScreen({ navigation }) {
             </Button>
           </View>
         )}
+        {/* This button will now work correctly */}
+        <Button
+          mode="contained"
+          onPress={handleUploadJsonFile}
+          style={[styles.button, { marginTop: 20 }]}
+          labelStyle={styles.buttonText}
+        >
+          Upload JSON File
+        </Button>
       </ScrollView>
     </SafeAreaView>
   );
@@ -223,7 +279,6 @@ const styles = StyleSheet.create({
     right: 20,
     top: 40,
     position: 'absolute',
-
   },
   header: {
     fontSize: 24,
@@ -239,13 +294,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 4,
-    borderRadius: 4
   },
   lyricsInput: {
     height: 200,
     textAlignVertical: 'top',
   },
-  button: { backgroundColor: colors.terracotta, paddingVertical: 8 },
+  button: { backgroundColor: colors.terracotta, paddingVertical: 8, borderRadius: 8 },
   buttonText: { color: colors.cream, fontSize: 16 },
   editorHeader: { fontSize: 18, color: colors.cream, textAlign: 'center', marginBottom: 20, fontStyle: 'italic' },
   editorLine: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: 15 },

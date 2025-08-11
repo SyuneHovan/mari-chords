@@ -26,6 +26,7 @@ const renderRightActions = (progress, dragX, onPress) => {
   );
 };
 
+
 export default function SongListScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [allSongs, setAllSongs] = useState([]);

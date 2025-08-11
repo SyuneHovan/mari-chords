@@ -12,6 +12,7 @@ import {
 	SafeAreaView,
 	KeyboardAvoidingView,
 	Platform,
+	Dimensions,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
@@ -26,11 +27,14 @@ import EditIcon from '../components/icons/EditIcon';
 import DoneIcon from '../components/icons/DoneIcon';
 import { getSongs, updateSong } from '../storage'; // Import getSongs and the new updateSong
 import Toast from 'react-native-toast-message';
+import YoutubePlayer from 'react-native-youtube-iframe'; // Install this package
+import { ScrollView as RNScrollView } from 'react-native';
 
 export default function SongDetailScreen() {
 	const route = useRoute();
 	const navigation = useNavigation();
 	const { songId } = route.params;
+	const screenWidth = Math.round(Dimensions.get('window').width);
 
 	const [loading, setLoading] = useState(true);
 	const [song, setSong] = useState(null);
@@ -38,6 +42,9 @@ export default function SongDetailScreen() {
 	const [scrollSpeed, setScrollSpeed] = useState('5');
 	const scrollRef = useRef(null);
 	const scrollPositionRef = useRef(0);
+	const [isUserScrolling, setIsUserScrolling] = useState(false);
+	const [youtubePlaying, setYoutubePlaying] = useState(false);
+	const [youtubeLink, setYoutubeLink] = useState('');
 
 	// --- State for chord editing ---
 	const [editingChord, setEditingChord] = useState(null); // { lineIndex, wordIndex }
@@ -49,20 +56,15 @@ export default function SongDetailScreen() {
 	const [editingWord, setEditingWord] = useState(null); // { lineIndex, wordIndex }
 	const [wordValue, setWordValue] = useState('');
 
-	// Loads song from local storage
+	// When loading song, use its defaultSpeed
 	const loadSong = async () => {
 		setLoading(true);
 		const allSongs = await getSongs();
 		const currentSong = allSongs.find((s) => s.id === songId);
 		setSong(currentSong);
+		setYoutubeLink(currentSong.youtubeLink || '');
+		setScrollSpeed(currentSong?.defaultSpeed?.toString() || '7'); // Use song's default speed, fallback to 7
 		setLoading(false);
-	};
-
-	// Handler for starting word edit
-	const handleWordEdit = (lineIndex, wordIndex, wordObj) => {
-		if (!isEditing) return;
-		setEditingWord({ lineIndex, wordIndex });
-		setWordValue(wordObj.word);
 	};
 
 	// --- NEW: Updates title/author in state as you type ---
@@ -78,6 +80,18 @@ export default function SongDetailScreen() {
 		Toast.show({ type: 'success', text1: 'Song updated!' });
 	};
 
+	// Save speed when changed
+	useEffect(() => {
+		if (song && scrollSpeed !== song.defaultSpeed?.toString()) {
+			const updatedSong = {
+				...song,
+				defaultSpeed: parseInt(scrollSpeed, 10) || 7,
+			};
+			setSong(updatedSong);
+			updateSong(updatedSong);
+		}
+	}, [scrollSpeed]);
+
 	useEffect(() => {
 		if (songId) {
 			loadSong();
@@ -88,43 +102,40 @@ export default function SongDetailScreen() {
 	useEffect(() => {
 		let scrollInterval;
 		const speed = Math.max(1, parseInt(scrollSpeed, 10) || 1);
-		if (isScrolling && scrollRef.current) {
-			scrollInterval = setInterval(() => {
-				scrollPositionRef.current += 1 * (speed / 5);
-				scrollRef.current.scrollTo({
-					y: scrollPositionRef.current,
-					animated: true,
-				});
-			}, 50);
-		}
-		return () => clearInterval(scrollInterval);
-	}, [isScrolling, scrollSpeed]);
 
-	// --- NEW: Function to handle saving an edited chord ---
+		// The condition is fine, but the implementation inside needs fixing
+		if (isScrolling && !isUserScrolling && scrollRef.current) {
+			scrollInterval = setInterval(() => {
+				scrollPositionRef.current += 1 * (speed / 20);
+				scrollRef.current?.scrollTo({
+					y: scrollPositionRef.current,
+					animated: false, //  <-- CRITICAL FIX
+				});
+			}, 16); // <-- Recommended interval for ~60fps
+		}
+
+		return () => clearInterval(scrollInterval);
+	}, [isScrolling, scrollSpeed, isUserScrolling]);
+
 	const handleSaveChord = async () => {
 		if (!editingChord) return;
-
 		const { lineIndex, wordIndex } = editingChord;
-
-		// Create a deep copy of the song to avoid direct state mutation
 		const updatedSong = JSON.parse(JSON.stringify(song));
-
-		// Update the chords for the specific word
 		updatedSong.lyrics[lineIndex][wordIndex].chords = chordValue
 			.split(/[\s,]+/)
 			.filter(Boolean);
-
-		// Save the entire updated song object to storage
 		await updateSong(updatedSong);
-
-		// Update the local state to show the change immediately
 		setSong(updatedSong);
-
-		// Reset editing state
 		setEditingChord(null);
 		setChordValue('');
-
 		Toast.show({ type: 'success', text1: 'Chord saved!' });
+	};
+
+	// Handler for starting word edit
+	const handleWordEdit = (lineIndex, wordIndex, wordObj) => {
+		if (!isEditing) return;
+		setEditingWord({ lineIndex, wordIndex });
+		setWordValue(wordObj.word);
 	};
 
 	// Handler for saving word edit
@@ -138,13 +149,6 @@ export default function SongDetailScreen() {
 		setEditingWord(null);
 		setWordValue('');
 		Toast.show({ type: 'success', text1: 'Word updated!' });
-	};
-
-	// Only allow chord editing if isEditing is true
-	const handleWordPress = (lineIndex, wordIndex, wordObj) => {
-		if (!isEditing) return;
-		setEditingChord({ lineIndex, wordIndex });
-		setChordValue(wordObj.chords.join(', '));
 	};
 
 	// Only allow metadata editing if isEditing is true
@@ -224,7 +228,9 @@ export default function SongDetailScreen() {
 				<WaveButton
 					pos='top right'
 					color='terracotta'
-					top={true}
+					onTop={true}
+					right={-40}
+					iconRight={0}
 					onPress={() => {
 						setIsEditing(!isEditing);
 						setEditingField(null);
@@ -232,33 +238,74 @@ export default function SongDetailScreen() {
 					}}
 					icon={
 						isEditing ? (
-							<DoneIcon textColor={colors.cream} />
+							<DoneIcon
+								textColor={colors.cream}
+								size={35}
+							/>
 						) : (
-							<EditIcon textColor={colors.cream} />
+							<EditIcon
+								textColor={colors.cream}
+								size={35}
+							/>
 						)
 					}
 				/>
-				{/* <View style={{ position: 'absolute', top: 30, right: 30, zIndex: 20 }}>
-					<Button
-						mode={isEditing ? 'contained' : 'outlined'}
-						onPress={() => {
-							setIsEditing(!isEditing);
-							setEditingField(null);
-							setEditingChord(null);
-						}}>
-						{isEditing ? 'Done' : 'Edit'}
-					</Button>
-				</View> */}
-
 				<View style={styles.headerContainer}>
-					<SongViewIcon style={styles.headerSvg} />
-					{renderTitle()}
-					{renderAuthor()}
-					<TouchableOpacity
-						style={styles.playButton}
-						onPress={() => setIsScrolling(!isScrolling)}>
-						{isScrolling ? <PauseIcon /> : <PlayIcon />}
-					</TouchableOpacity>
+					<RNScrollView
+						horizontal
+						pagingEnabled
+						showsHorizontalScrollIndicator={false}
+						style={{ height: 400, zIndex: 11, width: screenWidth - 130 }}>
+						{/* Slide 1: Song Info */}
+
+						<View
+							style={{
+								width: screenWidth - 130,
+								justifyContent: 'center',
+								alignItems: 'center',
+								zIndex: 11,
+							}}>
+							<SongViewIcon style={styles.headerSvg} />
+							{renderTitle()}
+							{renderAuthor()}
+							<TouchableOpacity
+								style={styles.playButton}
+								onPress={() => setIsScrolling(!isScrolling)}>
+								{isScrolling ? <PauseIcon /> : <PlayIcon />}
+							</TouchableOpacity>
+						</View>
+
+						{/* Slide 2: YouTube Video */}
+						<View
+							style={{
+								width: screenWidth - 120,
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}>
+							{song.youtubeLink && extractYoutubeId(song.youtubeLink) ? (
+								<View
+									style={{
+										width: screenWidth - 130,
+										height: 300,
+										justifyContent: 'center',
+										alignItems: 'center',
+									}}>
+									<YoutubePlayer
+										height={screenWidth - 230} // <-- FIX: Make height equal to width
+										width={screenWidth - 130}
+										play={youtubePlaying}
+										videoId={extractYoutubeId(song.youtubeLink)}
+										onChangeState={(event) => {
+											if (event === 'ended' || event === 'paused')
+												setYoutubePlaying(false);
+										}}
+									/>
+								</View>
+							) : (
+								<Text style={styles.youtubeTitle}>No valid YouTube link</Text>
+							)}
+						</View>
+					</RNScrollView>
 					<TextInput
 						style={styles.speedInput}
 						value={scrollSpeed}
@@ -275,10 +322,27 @@ export default function SongDetailScreen() {
 						preserveAspectRatio='xMidYMid slice'
 					/>
 					<View style={styles.lyricsInnerContainer}>
+						{isEditing && (
+							<>
+								<TextInput
+									label='YouTube link'
+									value={youtubeLink}
+									style={styles.input}
+									onChangeText={setYoutubeLink}
+								/>
+							</>
+						)}
+
 						<ScrollView
 							ref={scrollRef}
 							style={styles.scrollView}
-							contentContainerStyle={styles.lyricsContentContainer}>
+							contentContainerStyle={styles.lyricsContentContainer}
+							onScroll={(e) => {
+								scrollPositionRef.current = e.nativeEvent.contentOffset.y;
+							}}
+							onScrollBeginDrag={() => setIsUserScrolling(true)}
+							onScrollEndDrag={() => setIsUserScrolling(false)}
+							scrollEventThrottle={16}>
 							{song.lyrics.map((line, lineIndex) => (
 								<View
 									key={lineIndex}
@@ -305,7 +369,9 @@ export default function SongDetailScreen() {
 															setChordValue(wordObj.chords.join(', '));
 														}
 													}}>
-													<ScrollView horizontal showsHorizontalScrollIndicator={false}>
+													<ScrollView
+														horizontal
+														showsHorizontalScrollIndicator={false}>
 														<Text style={styles.chords}>
 															{wordObj.chords.join(' ')}
 														</Text>
@@ -418,6 +484,19 @@ const styles = StyleSheet.create({
 		marginTop: 15,
 		zIndex: 11,
 	},
+	input: {
+		marginBottom: 15,
+		backgroundColor: 'rgba(254, 241, 222, 0.7)',
+		borderRadius: 8,
+		shadowColor: '#000',
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.1,
+		shadowRadius: 4,
+		elevation: 4,
+		borderRadius: 4,
+		marginHorizontal: 20,
+		paddingHorizontal: 10,
+	},
 	speedInput: {
 		position: 'absolute',
 		bottom: 50,
@@ -429,7 +508,7 @@ const styles = StyleSheet.create({
 		borderBottomWidth: 2,
 		borderBottomColor: colors.charcoal,
 		padding: 0,
-		zIndex: 16, // <-- THIS IS THE FIX
+		zIndex: 16,
 	},
 	lyricsOuterContainer: {
 		flex: 1,
@@ -460,13 +539,13 @@ const styles = StyleSheet.create({
 	line: {
 		flexDirection: 'row',
 		flexWrap: 'wrap',
-		marginBottom: 25,
+		marginBottom: 20,
 	},
 	wordContainer: {
 		position: 'relative',
 		marginRight: 10,
-		marginBottom: 10,
-		paddingVertical: 5,
+		marginBottom: 0,
+		paddingVertical: 0,
 	},
 	chords: {
 		color: colors.cream,
@@ -513,3 +592,11 @@ const styles = StyleSheet.create({
 		backgroundColor: colors.sienna,
 	},
 });
+
+// Helper to extract YouTube ID
+function extractYoutubeId(url) {
+	const regExp =
+		/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+	const match = url.match(regExp);
+	return match && match[2].length === 11 ? match[2] : null;
+}
