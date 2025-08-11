@@ -7,7 +7,7 @@ import WaveButton from '../components/WaveButton';
 import AddIcon from '../components/icons/AddIcon';
 import SongIcon from '../components/icons/SongIcon';
 import Toast from 'react-native-toast-message';
-import HomeBgWaveIcon from '../components/icons/HomeBgWaveIcon';
+import HomeWaveIcon from '../components/icons/HomeWaveIcon';
 import { getSongs, deleteSong } from '../storage';
 
 // This component renders the "Delete" button when you swipe a song
@@ -90,7 +90,7 @@ export default function SongListScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.fullScreen}>
-      <HomeBgWaveIcon style={styles.homeBgWave} />
+      <HomeWaveIcon style={styles.homeBgWave} />
 
       <View style={styles.filterContainer}>
         <TextInput
@@ -153,7 +153,7 @@ export default function SongListScreen({ navigation }) {
       <WaveButton
         pos="bottom left"
         onPress={() => navigation.navigate('Add Song')}
-        icon={<AddIcon size={50} color={colors.cream} />}
+        icon={<AddIcon size={40} color={colors.cream} />}
       />
     </SafeAreaView>
   );

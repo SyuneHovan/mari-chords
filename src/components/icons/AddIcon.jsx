@@ -8,7 +8,7 @@ const AddIcon = ({ size = 50, color = "#fff" }) => {
       <Path
         d="M169 0V333.5M0.5 167.5H337"
         stroke={color}
-        strokeWidth="10" // Note: "stroke-width" becomes "strokeWidth" (camelCase)
+        strokeWidth="5" // Note: "stroke-width" becomes "strokeWidth" (camelCase)
       />
     </Svg>
   );
