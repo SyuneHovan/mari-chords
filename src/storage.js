@@ -13,6 +13,17 @@ export const getSongs = async () => {
   }
 };
 
+// --- Function to get all songs ---
+export const getChords = async () => {
+  try {
+    const jsonValue = await fetch('https://aghbyur.vercel.app/nvag/chords')
+    return jsonValue != null ? JSON.parse(jsonValue) : []; // Return songs array or empty array
+  } catch (e) {
+    console.error("Error reading songs from storage", e);
+    return [];
+  }
+};
+
 // --- Function to save a new song ---
 export const saveSong = async (newSong) => {
   try {

@@ -15,7 +15,7 @@ import {
 	Dimensions,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { Button } from 'react-native-paper';
+import { Button, Modal, Portal } from 'react-native-paper';
 import { colors } from '../theme';
 import WaveButton from '../components/WaveButton';
 import BackIcon from '../components/icons/BackIcon';
@@ -25,10 +25,12 @@ import PlayIcon from '../components/icons/PlayIcon';
 import PauseIcon from '../components/icons/PauseIcon';
 import EditIcon from '../components/icons/EditIcon';
 import DoneIcon from '../components/icons/DoneIcon';
-import { getSongs, updateSong } from '../storage'; // Import getSongs and the new updateSong
+import { getChords, getSongs, updateSong } from '../storage'; // Import getSongs and the new updateSong
 import Toast from 'react-native-toast-message';
 import YoutubePlayer from 'react-native-youtube-iframe'; // Install this package
 import { ScrollView as RNScrollView } from 'react-native';
+import apiClient from '../api/client';
+import ChordDiagram from '../components/SvgGenerator';
 
 export default function SongDetailScreen() {
 	const route = useRoute();
@@ -45,12 +47,15 @@ export default function SongDetailScreen() {
 	const [isUserScrolling, setIsUserScrolling] = useState(false);
 	const [youtubePlaying, setYoutubePlaying] = useState(false);
 	const [youtubeLink, setYoutubeLink] = useState('');
+	const [allChords, setAllChords] = useState([]);
+	const [selectedChord, setSelectedChord] = useState(null);
+	const [isChordModalVisible, setIsChordModalVisible] = useState(false);
 
 	// --- State for chord editing ---
 	const [editingChord, setEditingChord] = useState(null); // { lineIndex, wordIndex }
 	const [chordValue, setChordValue] = useState('');
 	const [editingField, setEditingField] = useState(null); // 'title' or 'author'
-	const [isEditing, setIsEditing] = useState(false);
+	const [isEditMode, setIsEditMode] = useState(false);
 
 	// --- State for word editing ---
 	const [editingWord, setEditingWord] = useState(null); // { lineIndex, wordIndex }
@@ -67,6 +72,15 @@ export default function SongDetailScreen() {
 		setLoading(false);
 	};
 
+	const loadChords = async () => {
+		try {
+			const chordsResponse = await apiClient.get('/nvag/chords');
+			setAllChords(chordsResponse.data);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
 	// --- NEW: Updates title/author in state as you type ---
 	const handleMetadataChange = (field, value) => {
 		setSong((prevSong) => ({ ...prevSong, [field]: value }));
@@ -78,6 +92,33 @@ export default function SongDetailScreen() {
 		await updateSong(song);
 		setEditingField(null);
 		Toast.show({ type: 'success', text1: 'Song updated!' });
+	};
+
+	const handleChordPress = (chordName) => {
+		if (isEditMode) {
+			// If in edit mode, open the text editor
+			const wordInfo = findWordByChord(chordName); // You'll need a helper to find the word info
+			if (wordInfo) {
+				setEditingChord(wordInfo);
+				setChordValue(wordInfo.wordObj.chords.join(', '));
+			}
+		} else {
+			// If in view mode, show the diagram
+			const chord = allChords.find(
+				(c) => c.name.toLowerCase() === chordName.toLowerCase()
+			);
+			if (chord) {
+				console.log('chord', chord);
+
+				setSelectedChord(chord);
+				setIsChordModalVisible(true);
+			} else {
+				Toast.show({
+					type: 'info',
+					text1: `Diagram for "${chordName}" not found.`,
+				});
+			}
+		}
 	};
 
 	// Save speed when changed
@@ -95,6 +136,7 @@ export default function SongDetailScreen() {
 	useEffect(() => {
 		if (songId) {
 			loadSong();
+			loadChords();
 		}
 	}, [songId]);
 
@@ -133,7 +175,7 @@ export default function SongDetailScreen() {
 
 	// Handler for starting word edit
 	const handleWordEdit = (lineIndex, wordIndex, wordObj) => {
-		if (!isEditing) return;
+		if (!isEditMode) return;
 		setEditingWord({ lineIndex, wordIndex });
 		setWordValue(wordObj.word);
 	};
@@ -151,9 +193,9 @@ export default function SongDetailScreen() {
 		Toast.show({ type: 'success', text1: 'Word updated!' });
 	};
 
-	// Only allow metadata editing if isEditing is true
+	// Only allow metadata editing if isEditMode is true
 	const renderTitle = () => {
-		if (isEditing && editingField === 'title') {
+		if (isEditMode && editingField === 'title') {
 			return (
 				<TextInput
 					value={song.name}
@@ -167,15 +209,15 @@ export default function SongDetailScreen() {
 		return (
 			<TouchableOpacity
 				style={styles.title}
-				disabled={!isEditing}
-				onPress={() => isEditing && setEditingField('title')}>
+				disabled={!isEditMode}
+				onPress={() => isEditMode && setEditingField('title')}>
 				<Text style={styles.title}>{song.name}</Text>
 			</TouchableOpacity>
 		);
 	};
 
 	const renderAuthor = () => {
-		if (isEditing && editingField === 'author') {
+		if (isEditMode && editingField === 'author') {
 			return (
 				<TextInput
 					value={song.author}
@@ -189,8 +231,8 @@ export default function SongDetailScreen() {
 		return (
 			<TouchableOpacity
 				style={styles.author}
-				disabled={!isEditing}
-				onPress={() => isEditing && setEditingField('author')}>
+				disabled={!isEditMode}
+				onPress={() => isEditMode && setEditingField('author')}>
 				<Text style={styles.author}>{song.author}</Text>
 			</TouchableOpacity>
 		);
@@ -209,63 +251,79 @@ export default function SongDetailScreen() {
 
 	return (
 		<SafeAreaView style={styles.fullScreen}>
+			<Portal>
+				<Modal
+					visible={isChordModalVisible}
+					onDismiss={() => setIsChordModalVisible(false)}
+					contentContainerStyle={styles.chordModalContainer}>
+					<ChordDiagram
+						chordData={selectedChord?.data}
+						chordName={selectedChord?.name}
+						baseColor={colors.charcoal}
+						fingerColor={colors.sage}
+						textColor={colors.charcoal}
+						backgroundColor={colors.cream}
+					/>
+				</Modal>
+			</Portal>
+
 			<KeyboardAvoidingView
 				style={{ flex: 1 }}
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 				keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0}>
 				<WaveButton
+					width={50}
+					top={-20}
+					iconTop={70}
+					iconLeft={35}
 					pos='top left'
 					onPress={() => navigation.goBack()}
 					icon={
 						<BackIcon
-							size={30}
+							size={25}
 							color={colors.cream}
 						/>
 					}
 				/>
 
-				{/* Edit button */}
-				<WaveButton
-					pos='top right'
-					color='terracotta'
-					onTop={true}
-					right={-40}
-					iconRight={0}
+				<TouchableOpacity
+					style={styles.editButton}
 					onPress={() => {
-						setIsEditing(!isEditing);
+						setIsEditMode(!isEditMode);
 						setEditingField(null);
 						setEditingChord(null);
-					}}
-					icon={
-						isEditing ? (
-							<DoneIcon
-								textColor={colors.cream}
-								size={35}
-							/>
-						) : (
-							<EditIcon
-								textColor={colors.cream}
-								size={35}
-							/>
-						)
-					}
-				/>
+					}}>
+					{isEditMode ? (
+						<DoneIcon
+							color={colors.cream}
+							size={35}
+						/>
+					) : (
+						<EditIcon
+							color={colors.cream}
+							size={35}
+						/>
+					)}
+				</TouchableOpacity>
 				<View style={styles.headerContainer}>
 					<RNScrollView
 						horizontal
 						pagingEnabled
 						showsHorizontalScrollIndicator={false}
-						style={{ height: 400, zIndex: 11, width: screenWidth - 130 }}>
+						style={{ width: screenWidth }}>
 						{/* Slide 1: Song Info */}
 
 						<View
 							style={{
-								width: screenWidth - 130,
+								width: screenWidth,
 								justifyContent: 'center',
 								alignItems: 'center',
-								zIndex: 11,
 							}}>
-							<SongViewIcon style={styles.headerSvg} />
+							<SongViewIcon
+								style={styles.headerSvg}
+								width={screenWidth - 150}
+								height={screenWidth - 150}
+							/>
 							{renderTitle()}
 							{renderAuthor()}
 							<TouchableOpacity
@@ -278,21 +336,21 @@ export default function SongDetailScreen() {
 						{/* Slide 2: YouTube Video */}
 						<View
 							style={{
-								width: screenWidth - 120,
+								width: screenWidth,
 								justifyContent: 'center',
 								alignItems: 'center',
 							}}>
 							{song.youtubeLink && extractYoutubeId(song.youtubeLink) ? (
 								<View
 									style={{
-										width: screenWidth - 130,
+										width: screenWidth - 150,
 										height: 300,
 										justifyContent: 'center',
 										alignItems: 'center',
 									}}>
 									<YoutubePlayer
-										height={screenWidth - 230} // <-- FIX: Make height equal to width
-										width={screenWidth - 130}
+										height={screenWidth - 150}
+										width={screenWidth - 150}
 										play={youtubePlaying}
 										videoId={extractYoutubeId(song.youtubeLink)}
 										onChangeState={(event) => {
@@ -306,23 +364,38 @@ export default function SongDetailScreen() {
 							)}
 						</View>
 					</RNScrollView>
-					<TextInput
-						style={styles.speedInput}
-						value={scrollSpeed}
-						onChangeText={setScrollSpeed}
-						keyboardType='numeric'
-						maxLength={2}
-						editable={isEditing}
-					/>
-				</View>
 
+					<View
+						style={{
+							flexDirection: 'row',
+							gap: 10,
+							justifyContent: 'start',
+							alignItems: 'center',
+							zIndex: 50,
+							position: 'absolute',
+							bottom: 70,
+							left: 20,
+							borderBottomWidth: 2,
+							borderBottomColor: colors.cream,
+						}}>
+						<Text style={styles.speed}>Speed</Text>
+						<TextInput
+							style={styles.speedInput}
+							value={scrollSpeed}
+							onChangeText={setScrollSpeed}
+							keyboardType='numeric'
+							maxLength={2}
+							editable={isEditMode}
+						/>
+					</View>
+				</View>
 				<View style={styles.lyricsOuterContainer}>
 					<BgWaveIcon
 						style={styles.bgWave}
 						preserveAspectRatio='xMidYMid slice'
 					/>
 					<View style={styles.lyricsInnerContainer}>
-						{isEditing && (
+						{isEditMode && (
 							<>
 								<TextInput
 									label='YouTube link'
@@ -348,25 +421,18 @@ export default function SongDetailScreen() {
 									key={lineIndex}
 									style={styles.line}>
 									{line.map((wordObj, wordIndex) => {
-										const isChordEditing =
-											editingChord &&
-											editingChord.lineIndex === lineIndex &&
-											editingChord.wordIndex === wordIndex;
-										const isWordEditing =
-											editingWord &&
-											editingWord.lineIndex === lineIndex &&
-											editingWord.wordIndex === wordIndex;
 										return (
 											<View
 												key={wordIndex}
 												style={styles.wordContainer}>
 												{/* Chord clickable */}
 												<TouchableOpacity
-													disabled={!isEditing}
 													onPress={() => {
-														if (isEditing) {
+														if (isEditMode) {
 															setEditingChord({ lineIndex, wordIndex });
 															setChordValue(wordObj.chords.join(', '));
+														} else {
+															handleChordPress(wordObj.chords[0]);
 														}
 													}}>
 													<ScrollView
@@ -379,9 +445,9 @@ export default function SongDetailScreen() {
 												</TouchableOpacity>
 												{/* Word clickable */}
 												<TouchableOpacity
-													disabled={!isEditing}
+													disabled={!isEditMode}
 													onPress={() =>
-														isEditing &&
+														isEditMode &&
 														handleWordEdit(lineIndex, wordIndex, wordObj)
 													}>
 													<Text style={styles.word}>{wordObj.word} </Text>
@@ -396,7 +462,7 @@ export default function SongDetailScreen() {
 				</View>
 
 				{/* Pop-up editor for chords */}
-				{isEditing && editingChord && (
+				{isEditMode && editingChord && (
 					<View style={styles.flyingEditor}>
 						<TextInput
 							style={styles.chordInput}
@@ -421,7 +487,7 @@ export default function SongDetailScreen() {
 				)}
 
 				{/* Pop-up editor for words */}
-				{isEditing && editingWord && (
+				{isEditMode && editingWord && (
 					<View style={styles.flyingEditor}>
 						<TextInput
 							style={styles.chordInput}
@@ -450,7 +516,17 @@ export default function SongDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-	fullScreen: { flex: 1, backgroundColor: colors.sage },
+	chordModalContainer: {
+		alignSelf: 'center',
+		borderRadius: 10,
+	},
+	editButton: {
+		position: 'absolute',
+		top: 45, // Adjust to your liking
+		right: 30, // Adjust to your liking
+		zIndex: 1, // Ensures the button is on top of other elements
+	},
+	fullScreen: { flex: 1, backgroundColor: colors.charcoal },
 	center: {
 		flex: 1,
 		justifyContent: 'center',
@@ -460,29 +536,28 @@ const styles = StyleSheet.create({
 	headerContainer: {
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginTop: 0,
 		height: 400,
+		backgroundColor: colors.sage,
 	},
 	headerSvg: {
 		position: 'absolute',
-		zIndex: 11,
+		marginTop: -50,
 	},
 	title: {
 		color: colors.charcoal,
 		fontWeight: '600',
 		textTransform: 'uppercase',
 		fontSize: 22,
-		marginTop: 0,
-		zIndex: 11,
+		marginTop: -20,
 	},
 	author: {
 		color: colors.charcoal,
 		fontWeight: '400',
 		fontSize: 16,
-		zIndex: 11,
 	},
 	playButton: {
 		marginTop: 15,
-		zIndex: 11,
 	},
 	input: {
 		marginBottom: 15,
@@ -498,21 +573,15 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 	},
 	speedInput: {
-		position: 'absolute',
-		bottom: 50,
-		right: 50,
-		width: 50,
 		textAlign: 'center',
 		fontSize: 20,
-		color: colors.charcoal,
-		borderBottomWidth: 2,
-		borderBottomColor: colors.charcoal,
+		color: colors.cream,
 		padding: 0,
 		zIndex: 16,
 	},
 	lyricsOuterContainer: {
 		flex: 1,
-		transform: 'translateY(-90px)',
+		transform: 'translateY(-150px)',
 	},
 	lyricsInnerContainer: {
 		flex: 1,
@@ -533,7 +602,7 @@ const styles = StyleSheet.create({
 	},
 	lyricsContentContainer: {
 		paddingTop: 45,
-		paddingHorizontal: 30,
+		paddingHorizontal: 20,
 		paddingBottom: 30,
 	},
 	line: {
@@ -557,6 +626,10 @@ const styles = StyleSheet.create({
 		maxWidth: 'none',
 		zIndex: 2,
 		marginBottom: 2, // Optional: space between chord and word
+	},
+	speed: {
+		color: colors.cream,
+		zIndex: 2,
 	},
 	word: {
 		color: colors.cream,

@@ -9,6 +9,7 @@ import { colors } from '../theme';
 const WaveButton = ({
 	onPress,
 	icon,
+	width = 60,
 	pos = 'bottom right',
 	color = 'charcoal',
   onTop = false,
@@ -24,7 +25,7 @@ const WaveButton = ({
 	const styles = StyleSheet.create({
 		container: {
 			position: 'absolute',
-			width: '60%',
+			width: `${width}%`,
 			height: 150,
 			zIndex: onTop ? 50 : 10,
 		},

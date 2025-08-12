@@ -5,10 +5,12 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { colors } from '../theme';
 import WaveButton from '../components/WaveButton';
 import AddIcon from '../components/icons/AddIcon';
+import SearchIcon from '../components/icons/SearchIcon';
 import SongIcon from '../components/icons/SongIcon';
 import Toast from 'react-native-toast-message';
 import HomeWaveIcon from '../components/icons/HomeWaveIcon';
 import { getSongs, deleteSong } from '../storage';
+import Search from 'antd/es/transfer/search';
 
 // This component renders the "Delete" button when you swipe a song
 const renderRightActions = (progress, dragX, onPress) => {
@@ -95,10 +97,11 @@ export default function SongListScreen({ navigation }) {
 
       <View style={styles.filterContainer}>
         <TextInput
-          label="Search a song..."
+          left={<TextInput.Icon icon={() => <SearchIcon size={18} />} style={{ marginLeft: -35 }} />}
           value={searchText}
           onChangeText={setSearchText}
           style={styles.searchInput}
+          contentStyle={styles.contentSearchInput}
           mode="flat"
           underlineColor="transparent"
           activeUnderlineColor="transparent"
@@ -166,11 +169,16 @@ const styles = StyleSheet.create({
   homeBgWave: { position: 'absolute', top: -400, left: 0, right: 0, zIndex: 0 },
   filterContainer: { paddingHorizontal: 20, paddingTop: 40 },
   searchInput: {
+    marginTop: 20,
     marginBottom: 15,
     backgroundColor: 'transparent', // Use transparent background
     borderBottomWidth: 2,           // Add a 2px border
     borderBottomColor: colors.cream, // Use cream color for the border
-    paddingHorizontal: 2, // Add a little horizontal padding
+    paddingHorizontal: 0, // Add a little horizontal padding
+    height: 35, // Slightly reduced height
+  },
+  contentSearchInput: {
+    marginLeft: 10, // Add a little horizontal padding
   },
   categoryContainer: {
     paddingVertical: 10,
