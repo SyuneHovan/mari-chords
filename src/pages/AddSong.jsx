@@ -102,7 +102,6 @@ export const AddSong = () => {
       lyrics: parsedLines,
     };
   
-    console.log("Sending payload to /api/save:", JSON.stringify(songData, null, 2));
   
     const SERVER_URL = window.location.origin;
   
@@ -140,7 +139,6 @@ export const AddSong = () => {
   const handleOpenModal = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Opening modal, setting isModalVisible to true");
     setIsModalVisible(true);
   };
   
@@ -260,7 +258,6 @@ export const AddSong = () => {
         open={isModalVisible}
         className="modal-addascode"
         onCancel={() => {
-          console.log("Closing modal, setting isModalVisible to false");
           setIsModalVisible(false);
         }}
         onOk={async () => {

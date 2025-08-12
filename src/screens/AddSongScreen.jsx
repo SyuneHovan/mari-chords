@@ -104,7 +104,6 @@ export default function AddSongScreen({ navigation }) {
 
       // The new API returns `canceled` instead of throwing an error
       if (result.canceled) {
-        console.log('User cancelled file picker');
         return;
       }
 

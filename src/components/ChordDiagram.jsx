@@ -49,7 +49,6 @@ const ChordDiagram = ({
       offset = Math.min(...frettedNotes);
 		}
     
-    console.log('numericData', frettedNotes);
 		// Adjust chord data based on the offset
 		const adjustedData = numericData.map((fret) => {
 			if (typeof fret === 'number' && fret > 0 && offset > 0) {

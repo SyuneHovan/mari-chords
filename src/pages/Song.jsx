@@ -30,7 +30,6 @@ export const Song = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    console.log("Navigating back");
     navigate(-1);
   };
 
@@ -64,8 +63,6 @@ export const Song = () => {
   };
 
   useEffect(() => {
-    console.log("useParams:", params);
-    console.log("id:", id);
     if (id) {
       fetchSong(id);
     } else {
@@ -170,8 +167,6 @@ export const Song = () => {
     const SERVER_URL = window.location.origin;
 
     try {
-      console.log("Saving chord, sending request to:", `${SERVER_URL}/api/save`);
-      console.log("Request payload:", JSON.stringify(updatedSong));
 
       const response = await fetch(`${SERVER_URL}/api/save`, {
         method: "POST",
@@ -186,7 +181,6 @@ export const Song = () => {
       }
 
       const data = await response.json();
-      console.log("Success saving chord:", data.message);
       toast.success("Chord saved successfully!", {
         position: "top-center",
         autoClose: 2000,

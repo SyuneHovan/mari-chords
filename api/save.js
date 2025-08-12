@@ -65,7 +65,6 @@ export default async function handler(req, res) {
 
       await client.query('COMMIT');
       const result = { id: songId, name, author, category, lyrics };
-      console.log('Saved song:', result);
       return res.status(201).json({ message: 'Song saved successfully!', song: result });
     } catch (error) {
       await client.query('ROLLBACK');

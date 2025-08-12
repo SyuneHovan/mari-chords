@@ -37,7 +37,6 @@ export default async function handler(req, res) {
       return res.status(404).json({ error: 'Song not found' });
     }
 
-    console.log('Deleted song:', result[0]);
     return res.status(200).json({ message: 'Song deleted successfully!' });
   } catch (error) {
     console.error('Database error:', error.message);

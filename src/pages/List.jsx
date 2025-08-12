@@ -122,7 +122,7 @@ export const List = () => {
       }
 
       const data = await response.json();
-      console.log("Success deleting the song:", data.message);
+      ("Success deleting the song:", data.message);
       toast.success(data.message, {
         position: "top-center",
         autoClose: 2000,

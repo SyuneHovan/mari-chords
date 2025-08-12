@@ -30,7 +30,7 @@ import Toast from 'react-native-toast-message';
 import YoutubePlayer from 'react-native-youtube-iframe'; // Install this package
 import { ScrollView as RNScrollView } from 'react-native';
 import apiClient from '../api/client';
-import ChordDiagram from '../components/SvgGenerator';
+import ChordDiagram from '../components/ChordDiagram';
 
 export default function SongDetailScreen() {
 	const route = useRoute();
@@ -108,7 +108,6 @@ export default function SongDetailScreen() {
 				(c) => c.name.toLowerCase() === chordName.toLowerCase()
 			);
 			if (chord) {
-				console.log('chord', chord);
 
 				setSelectedChord(chord);
 				setIsChordModalVisible(true);

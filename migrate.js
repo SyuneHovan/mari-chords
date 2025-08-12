@@ -15,7 +15,6 @@ async function migrate() {
   const client = await pool.connect();
   try {
     await client.query('BEGIN'); // Start transaction
-    console.log("Սկսում եմ լցնել");
 
     for (const song of songsData) {
       // Insert song metadata
@@ -34,11 +33,9 @@ async function migrate() {
           );
         });
       });
-      console.log(song.name, "երգը աւելացուած է");
     }
 
     await client.query('COMMIT'); // Commit transaction
-    console.log('Փոխադրումը աւարտուած է');
   } catch (error) {
     await client.query('ROLLBACK'); // Rollback on error
     console.error('Փոխադրումը խափանուել է՝', error);
