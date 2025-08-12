@@ -419,7 +419,7 @@ export default function SongDetailScreen() {
 								<View
 									key={lineIndex}
 									style={styles.line}>
-									{line.map((wordObj, wordIndex) => {
+                  {line.map((wordObj, wordIndex) => {
 										return (
 											<View
 												key={wordIndex}

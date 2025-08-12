@@ -12,7 +12,6 @@ import BackIcon from './components/icons/BackIcon';
 import SongListScreen from './screens/SongListScreen.jsx';
 import SongDetailScreen from './screens/SongDetailScreen.jsx';
 import AddSongScreen from './screens/AddSongScreen.jsx';
-import MySongScreen from './screens/SongText.jsx';
 
 const Stack = createNativeStackNavigator();
 
